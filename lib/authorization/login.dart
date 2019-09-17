@@ -105,8 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                 signIn(emailController.text, passwordController.text);
               },
         elevation: 0.0,
-        color: Colors.blue[900],
-        child: Text("Войти", style: TextStyle(color: Colors.white70)),
+        color: Colors.blueAccent[700],
+        child: Text("Войти", style: TextStyle(color: Colors.white)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
     );
