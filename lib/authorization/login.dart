@@ -22,39 +22,44 @@ class _LoginPageState extends State<LoginPage> {
         .copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/bg.jpg"),
-            fit: BoxFit.cover,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/bg.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: EdgeInsets.only(
-                  top: 190,
-                  right: 20,
-                  bottom: 180,
-                  left: 20,
-                ),
-                child: Card(
-                    child: Padding(
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Padding(
                   padding: EdgeInsets.only(
-                    top: 15,
-                    right: 35,
-                    bottom: 30,
-                    left: 35,
+                    top: 190,
+                    right: 20,
+                    bottom: 180,
+                    left: 20,
                   ),
-                  child: ListView(
-                    children: <Widget>[
-                      headerSection(),
-                      textSection(),
-                      buttonSection(),
-                    ],
-                  ),
-                )),
-              ),
+                  child: Card(
+                      child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      right: 35,
+                      bottom: 30,
+                      left: 35,
+                    ),
+                    child: ListView(
+                      children: <Widget>[
+                        headerSection(),
+                        textSection(),
+                        buttonSection(),
+                      ],
+                    ),
+                  )),
+                ),
+        ),
       ),
     );
   }
