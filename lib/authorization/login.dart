@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.local_phone),
                 border: OutlineInputBorder(),
-                labelText: 'Email',
+                labelText: 'Phone',
               ),
             ),
           ),
