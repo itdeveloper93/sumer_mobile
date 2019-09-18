@@ -73,11 +73,12 @@ class _LoginPageState extends State<LoginPage> {
     };
     var jsonResponse;
     var response = await http
-        .post(URL + "api/Account/Login", body: json.encode(data), headers: {
+        .post(URL + "api/Auth/Token", body: json.encode(data), headers: {
       "content-type": "application/json",
       "accept": "application/json",
     });
     if (response.statusCode == 200) {
+      print('work');
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
