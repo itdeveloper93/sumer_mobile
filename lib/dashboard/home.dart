@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sumer_mobile/authorization/login.dart';
+import 'package:http/http.dart' as http;
+import 'package:sumer_mobile/dashboard/profile_model.dart';
+import 'package:sumer_mobile/global.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   SharedPreferences sharedPreferences;
   // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String token;
+  List data;
 
   @override
   void initState() {
@@ -19,10 +27,28 @@ class _HomePageState extends State<HomePage> {
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if (sharedPreferences.getString("token") == null) {
+    token = sharedPreferences.getString("token");
+    if (token == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
           (Route<dynamic> route) => false);
+    }
+  }
+
+  Future<Profile> getData() async {
+    http.Response response =
+        await http.get(URL + 'api/Account/MyInfo', headers: {
+      HttpHeaders.acceptHeader: 'application/json',
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer ' + token
+    });
+
+    if (response.statusCode == 200) {
+      // If server returns an OK response, parse the JSON.
+      return Profile.fromJson(json.decode(response.body));
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load post');
     }
   }
 
@@ -31,7 +57,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // key: _scaffoldKey,
       appBar: AppBar(
-        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.apps, color: Colors.blueAccent[700]),
@@ -68,107 +93,120 @@ class _HomePageState extends State<HomePage> {
           color: Color(0xFF293147),
           child: Column(children: <Widget>[
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    accountName: Text(
-                      "Iskandar Mirzoev",
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                        fontSize: 17,
-                      ),
-                    ),
-                    accountEmail: Text(
-                      "Mobile Developer",
-                      style: TextStyle(
-                        color: Color(0xFF868FA5),
-                        fontSize: 12,
-                      ),
-                    ),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://www.outerplaces.com/media/k2/items/cache/694f682377d0e66514a01a87bb9e4fb5_L.jpg'),
-                      backgroundColor: Colors.transparent,
-                    ),
-                    decoration: BoxDecoration(color: Color(0xFF323C58)),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.archive,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                    title: Text(
-                      'Сообщения',
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                      ),
-                    ),
-                    trailing: Text(
-                      '15',
-                      style: TextStyle(color: Color(0xFFd2d7e8)),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.desktop_windows,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                    title: Text(
-                      'Рабочий стол',
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.library_books,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                    title: Text(
-                      'Новости и информация',
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_right,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.view_list,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                    title: Text(
-                      'Справочники',
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_right,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.settings_input_component,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                    title: Text(
-                      'Администрирование',
-                      style: TextStyle(
-                        color: Color(0xFFd2d7e8),
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_right,
-                      color: Color(0xFFd2d7e8),
-                    ),
-                  ),
-                ],
+              child: FutureBuilder<Profile>(
+                future: getData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView(
+                      children: <Widget>[
+                        UserAccountsDrawerHeader(
+                          accountName: Text(
+                            snapshot.data.fullName,
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                              fontSize: 17,
+                            ),
+                          ),
+                          accountEmail: Text(
+                            snapshot.data.positionName,
+                            style: TextStyle(
+                              color: Color(0xFF868FA5),
+                              fontSize: 12,
+                            ),
+                          ),
+                          currentAccountPicture: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(snapshot.data.photoPathSmall),
+                            backgroundColor: Colors.transparent,
+                          ),
+                          decoration: BoxDecoration(color: Color(0xFF323C58)),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.archive,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                          title: Text(
+                            'Сообщения',
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                            ),
+                          ),
+                          trailing: Text(
+                            '15',
+                            style: TextStyle(color: Color(0xFFd2d7e8)),
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.desktop_windows,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                          title: Text(
+                            'Рабочий стол',
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                            ),
+                          ),
+                          onTap: () => getData(),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.library_books,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                          title: Text(
+                            'Новости и информация',
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_right,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.view_list,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                          title: Text(
+                            'Справочники',
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_right,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.settings_input_component,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                          title: Text(
+                            'Администрирование',
+                            style: TextStyle(
+                              color: Color(0xFFd2d7e8),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_right,
+                            color: Color(0xFFd2d7e8),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+
+                  // By default, show a loading spinner.
+                  return CircularProgressIndicator();
+                },
               ),
             ),
             Container(
