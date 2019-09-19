@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
+  String token;
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +68,8 @@ class _LoginPageState extends State<LoginPage> {
   signIn(String phoneNumber, password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map data = {
-      'phoneNumber': phoneNumber,
-      'password': password,
+      'phoneNumber': 919036303,
+      'password': 123123,
       'rememberMe': true
     };
     var jsonResponse;
@@ -96,19 +97,26 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString("token");
+  }
+
   Container buttonSection() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 55.0,
       child: RaisedButton(
-        onPressed: emailController.text == "" || passwordController.text == ""
-            ? null
-            : () {
-                setState(() {
-                  _isLoading = true;
-                });
-                signIn(emailController.text, passwordController.text);
-              },
+        onPressed:
+            // emailController.text == "" || passwordController.text == ""
+            //     ? null
+            //     :
+            () {
+          setState(() {
+            _isLoading = true;
+          });
+          signIn(emailController.text, passwordController.text);
+        },
         elevation: 0.0,
         color: Colors.indigoAccent[700],
         child: Text("Войти", style: TextStyle(color: Colors.white)),

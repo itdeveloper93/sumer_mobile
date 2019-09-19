@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sumer_mobile/authorization/login.dart';
 import 'package:http/http.dart' as http;
-import 'package:sumer_mobile/dashboard/profile_model.dart';
+import 'package:sumer_mobile/common/parse_token.dart';
 import 'package:sumer_mobile/global.dart';
+import 'package:sumer_mobile/model/mini_profile.dart';
+import 'package:sumer_mobile/model/profile_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,40 +19,55 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   SharedPreferences sharedPreferences;
   // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String token;
+  static String token;
   List data;
+  MiniProfile miniProfile;
 
   @override
   void initState() {
     super.initState();
-    checkLoginStatus();
+    // myMethod()
+    //     .then((success) => checkLoginStatus())
+    //     .catchError((e) => print(e))
+    //     .whenComplete(() {});
   }
 
-  checkLoginStatus() async {
+  Future<MiniProfile> myMethod() async {
     sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences.getString("token");
-    if (token == null) {
+    print((token));
+    print(parseJwt(token));
+    return MiniProfile.fromJson(parseJwt(token));
+    // return miniProfile;
+  }
+
+  // MiniProfile getProfile() {
+  //   myMethod()
+  //       .then((success) => checkLoginStatus())
+  //       .catchError((e) => print(e))
+  //       .whenComplete(() {});
+  //   return miniProfile;
+  // }
+
+  checkLoginStatus() async {
+    print(miniProfile.name);
+
+    if (miniProfile == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
           (Route<dynamic> route) => false);
     }
-  }
-
-  Future<Profile> getData() async {
-    http.Response response =
-        await http.get(URL + 'api/Account/MyInfo', headers: {
-      HttpHeaders.acceptHeader: 'application/json',
-      HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer ' + token
-    });
-
-    if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
-      return Profile.fromJson(json.decode(response.body));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load post');
-    }
+    // Future<MiniProfile> getData() async {
+    //   parseJwt(token);
+    //   if (token == !null) {
+    //     print(MiniProfile.fromJson(json.decode(response.body)));
+    //     // If server returns an OK response, parse the JSON.
+    //     return MiniProfile.fromJson(json.decode(response.body));
+    //   } else {
+    //     // If that response was not OK, throw an error.
+    //     throw Exception('Failed to load post');
+    //   }
+    // }
   }
 
   @override
@@ -95,28 +113,27 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  FutureBuilder<Profile>(
-                    future: getData(),
+                  FutureBuilder<MiniProfile>(
+                    future: myMethod(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return UserAccountsDrawerHeader(
                           accountName: Text(
-                            snapshot.data.fullName,
+                            snapshot.data.name,
                             style: TextStyle(
                               color: Color(0xFFd2d7e8),
                               fontSize: 17,
                             ),
                           ),
                           accountEmail: Text(
-                            snapshot.data.positionName,
+                            snapshot.data.position,
                             style: TextStyle(
                               color: Color(0xFF868FA5),
                               fontSize: 12,
                             ),
                           ),
                           currentAccountPicture: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(snapshot.data.photoPathSmall),
+                            backgroundImage: NetworkImage(snapshot.data.photo),
                             backgroundColor: Colors.transparent,
                           ),
                           decoration: BoxDecoration(color: Color(0xFF323C58)),
@@ -126,9 +143,7 @@ class _HomePageState extends State<HomePage> {
                       }
 
                       // By default, show a loading spinner.
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return CircularProgressIndicator();
                     },
                   ),
                   ListTile(
@@ -158,7 +173,6 @@ class _HomePageState extends State<HomePage> {
                         color: Color(0xFFd2d7e8),
                       ),
                     ),
-                    onTap: () => getData(),
                   ),
                   ListTile(
                     leading: const Icon(
