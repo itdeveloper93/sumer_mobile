@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
       "accept": "application/json",
     });
     if (response.statusCode == 200) {
-      print('work');
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
