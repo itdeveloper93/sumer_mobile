@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     checkLoginStatus();
-    getData();
   }
 
   checkLoginStatus() async {
@@ -94,13 +93,13 @@ class _HomePageState extends State<HomePage> {
           color: Color(0xFF293147),
           child: Column(children: <Widget>[
             Expanded(
-              child: FutureBuilder<Profile>(
-                future: getData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView(
-                      children: <Widget>[
-                        UserAccountsDrawerHeader(
+              child: ListView(
+                children: <Widget>[
+                  FutureBuilder<Profile>(
+                    future: getData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return UserAccountsDrawerHeader(
                           accountName: Text(
                             snapshot.data.fullName,
                             style: TextStyle(
@@ -121,92 +120,95 @@ class _HomePageState extends State<HomePage> {
                             backgroundColor: Colors.transparent,
                           ),
                           decoration: BoxDecoration(color: Color(0xFF323C58)),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.archive,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                          title: Text(
-                            'Сообщения',
-                            style: TextStyle(
-                              color: Color(0xFFd2d7e8),
-                            ),
-                          ),
-                          trailing: Text(
-                            '15',
-                            style: TextStyle(color: Color(0xFFd2d7e8)),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.desktop_windows,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                          title: Text(
-                            'Рабочий стол',
-                            style: TextStyle(
-                              color: Color(0xFFd2d7e8),
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.library_books,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                          title: Text(
-                            'Новости и информация',
-                            style: TextStyle(
-                              color: Color(0xFFd2d7e8),
-                            ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_right,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.view_list,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                          title: Text(
-                            'Справочники',
-                            style: TextStyle(
-                              color: Color(0xFFd2d7e8),
-                            ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_right,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.settings_input_component,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                          title: Text(
-                            'Администрирование',
-                            style: TextStyle(
-                              color: Color(0xFFd2d7e8),
-                            ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_right,
-                            color: Color(0xFFd2d7e8),
-                          ),
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
 
-                  // By default, show a loading spinner.
-                  return CircularProgressIndicator();
-                },
+                      // By default, show a loading spinner.
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.archive,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                    title: Text(
+                      'Сообщения',
+                      style: TextStyle(
+                        color: Color(0xFFd2d7e8),
+                      ),
+                    ),
+                    trailing: Text(
+                      '15',
+                      style: TextStyle(color: Color(0xFFd2d7e8)),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.desktop_windows,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                    title: Text(
+                      'Рабочий стол',
+                      style: TextStyle(
+                        color: Color(0xFFd2d7e8),
+                      ),
+                    ),
+                    onTap: () => getData(),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.library_books,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                    title: Text(
+                      'Новости и информация',
+                      style: TextStyle(
+                        color: Color(0xFFd2d7e8),
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_right,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.view_list,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                    title: Text(
+                      'Справочники',
+                      style: TextStyle(
+                        color: Color(0xFFd2d7e8),
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_right,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.settings_input_component,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                    title: Text(
+                      'Администрирование',
+                      style: TextStyle(
+                        color: Color(0xFFd2d7e8),
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_right,
+                      color: Color(0xFFd2d7e8),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
