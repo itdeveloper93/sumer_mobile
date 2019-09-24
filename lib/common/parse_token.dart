@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:sumer_mobile/model/mini_profile.dart';
-
 Map<String, dynamic> parseJwt(String token) {
   final parts = token.split('.');
   if (parts.length != 3) {
