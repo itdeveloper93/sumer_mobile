@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sumer_mobile/dashboard/home.dart';
-
 import '../global.dart';
 
 class LoginPage extends StatefulWidget {
