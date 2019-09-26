@@ -24,7 +24,7 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
   @override
   void initState() {
     super.initState();
-    checkLoginStatus();
+    // checkLoginStatus();
     profileFuture = myMethod();
     // myMethod()
     //     .then((success) => checkLoginStatus())
