@@ -21,7 +21,7 @@ class Main extends StatelessWidget {
       title: "Sumer",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(accentColor: Colors.white70),
-      home: HomePage(),
+      home: UserInfo(),
     );
   }
 }
