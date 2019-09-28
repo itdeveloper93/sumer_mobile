@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sumer_mobile/administration/edit_user_info.dart';
 import 'package:sumer_mobile/model/profile_model.dart';
+import 'package:sumer_mobile/services/auth_service.dart';
 import 'dart:async';
 
 import '../dashboard/global_drawer.dart';
@@ -14,16 +16,10 @@ class UserInfo extends StatelessWidget {
   String get data => null;
 
   Future<Profile> fetchPost() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String token = sharedPreferences.getString("token");
     final response = await http.get(
       URL + "api/Account/MyInfo",
       // Send authorization headers to the backend.
-      headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + token,
-        HttpHeaders.acceptHeader: 'application/json',
-        HttpHeaders.contentTypeHeader: 'application/json',
-      },
+      headers: await AuthService.authToken(),
     );
 
     if (response.statusCode == 200) {
@@ -331,7 +327,11 @@ class UserInfo extends StatelessWidget {
           color: Colors.white,
         ),
         onPressed: () {
-          fetchPost();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (BuildContext context) => EditUserInfo(),
+              ),
+              (Route<dynamic> route) => false);
         },
       ),
     );
