@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sumer_mobile/authorization/login.dart';
 
 import './global_drawer.dart';
 import './global_appBar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token");
+    if (token == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

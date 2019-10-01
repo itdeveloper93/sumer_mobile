@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sumer_mobile/services/auth_service.dart';
 import '../administration/user_info.dart';
 import '../authorization/login.dart';
 import '../common/parse_token.dart';
@@ -14,44 +15,23 @@ class GlobalDrawer extends StatefulWidget {
 }
 
 class _GlobalDrawerState extends State<GlobalDrawer> {
-  SharedPreferences sharedPreferences;
-  // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  static String token;
-  List data;
   MiniProfile miniProfile;
   Future<MiniProfile> profileFuture;
 
   @override
   void initState() {
     super.initState();
-    // checkLoginStatus();
-    profileFuture = myMethod();
+    profileFuture = myProfile();
     // myMethod()
     //     .then((success) => checkLoginStatus())
     //     .catchError((e) => print(e))
     //     .whenComplete(() {});
   }
 
-  Future<MiniProfile> myMethod() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    token = sharedPreferences.getString("token");
-    return MiniProfile.fromJson(parseJwt(token));
-  }
-
-  // MiniProfile getProfile() {
-  //   myMethod()
-  //       .then((success) => checkLoginStatus())
-  //       .catchError((e) => print(e))
-  //       .whenComplete(() {});
-  //   return miniProfile;
-  // }
-
-  checkLoginStatus() async {
-    if (token == null) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-          (Route<dynamic> route) => false);
-    }
+  Future<MiniProfile> myProfile() async {
+    return MiniProfile.fromJson(parseJwt(
+      await AuthService.getToken(),
+    ));
   }
 
   @override
@@ -187,8 +167,6 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
               ),
               ListTile(
                 onTap: () {
-                  sharedPreferences.clear();
-                  // sharedPreferences.commit();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (BuildContext context) => LoginPage()),

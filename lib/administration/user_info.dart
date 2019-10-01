@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sumer_mobile/administration/edit_user_info.dart';
 import 'package:sumer_mobile/model/profile_model.dart';
 import 'package:sumer_mobile/services/auth_service.dart';
@@ -13,13 +11,11 @@ import '../dashboard/global_appBar.dart';
 import '../global.dart';
 
 class UserInfo extends StatelessWidget {
-  String get data => null;
-
-  Future<Profile> fetchPost() async {
+  Future<Profile> fetchMyProfile() async {
     final response = await http.get(
       URL + "api/Account/MyInfo",
       // Send authorization headers to the backend.
-      headers: await AuthService.authToken(),
+      headers: await AuthService.addAuthTokenToRequest(),
     );
 
     if (response.statusCode == 200) {
@@ -49,7 +45,7 @@ class UserInfo extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<Profile>(
-        future: fetchPost(),
+        future: fetchMyProfile(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView(
