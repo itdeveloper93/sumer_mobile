@@ -15,7 +15,31 @@ class EditUserInfo extends StatefulWidget {
 }
 
 class _EditUserInfoState extends State<EditUserInfo> {
-  bool _isLoading = false;
+  static String email;
+  static String factualAddress;
+  bool isLoading = false;
+
+  // void fetchProducts() {
+  //   http
+  //       .get('https://flutter-products.firebaseio.com/products.json')
+  //       .then((http.Response response) {
+  //     final List<Profile> fetchedProductList = [];
+  //     final Map<String, dynamic> productListData = json.decode(response.body);
+  //     productListData.forEach((String productId, dynamic productData) {
+  //       final Profile userInfo = Profile(
+  //           id: productId,
+  //           title: productData['title'],
+  //           description: productData['description'],
+  //           image: productData['image'],
+  //           price: productData['price'],
+  //           userEmail: productData['userEmail'],
+  //           userId: productData['userId']);
+  //       fetchedProductList.add(userInfo);
+  //     });
+  //     _products = fetchedProductList;
+  //     notifyListeners();
+  //   });
+  // }
 
   Future<Profile> fetchMyProfile() async {
     final response = await http.get(
@@ -25,12 +49,21 @@ class _EditUserInfoState extends State<EditUserInfo> {
     );
 
     if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON.
+      Map decoded = json.decode(response.body);
+      email = decoded['data']['email'];
+      factualAddress = decoded['data']['factualAddress'];
+
       return Profile.fromJson(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
     }
+  }
+
+  @override
+  void initState() {
+    fetchMyProfile();
+    super.initState();
   }
 
   signIn(String email, factualAddress) async {
@@ -48,7 +81,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
-          _isLoading = false;
+          isLoading = false;
         });
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => UserInfo()),
@@ -56,7 +89,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
       }
     } else {
       setState(() {
-        _isLoading = false;
+        isLoading = false;
       });
       print(response.body);
     }
@@ -84,7 +117,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
             //     :
             () {
           setState(() {
-            _isLoading = true;
+            isLoading = true;
           });
           signIn(emailController.text, factualAddressController.text);
         },
@@ -96,9 +129,10 @@ class _EditUserInfoState extends State<EditUserInfo> {
     );
   }
 
-  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: email);
   final TextEditingController factualAddressController =
-      new TextEditingController();
+      TextEditingController(text: factualAddress);
 
   Container textSection() {
     return Container(
@@ -118,7 +152,6 @@ class _EditUserInfoState extends State<EditUserInfo> {
             margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               controller: factualAddressController,
-              obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Фактический адрес',

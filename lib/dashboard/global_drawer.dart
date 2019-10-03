@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sumer_mobile/services/auth_service.dart';
 import '../administration/user_info.dart';
 import '../authorization/login.dart';
@@ -167,10 +166,7 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => LoginPage()),
-                      (Route<dynamic> route) => false);
+                  AuthService.logout(context);
                 },
                 leading: const Icon(
                   Icons.exit_to_app,
