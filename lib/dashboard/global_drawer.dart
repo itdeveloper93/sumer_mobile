@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sumer_mobile/services/auth_service.dart';
 import '../administration/user_info.dart';
-import '../authorization/login.dart';
 import '../common/parse_token.dart';
 import '../model/mini_profile.dart';
 
@@ -42,12 +41,14 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
           Expanded(
             child: ListView(
               children: <Widget>[
-                GestureDetector(
+                InkWell(
                   onTap: () {
-                    // Navigator.of(context).pushAndRemoveUntil(
-                    //     MaterialPageRoute(
-                    //         builder: (BuildContext context) => LoginPage()),
-                    //     (Route<dynamic> route) => false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserInfo(),
+                      ),
+                    );
                   },
                   child: FutureBuilder<MiniProfile>(
                     future: profileFuture,
@@ -122,8 +123,8 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                         ));
                   },
                 ),
-                ListTile(
-                  leading: const Icon(
+                ExpansionTile(
+                  leading: Icon(
                     Icons.library_books,
                     color: Color(0xFFd2d7e8),
                   ),
@@ -133,17 +134,96 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                       color: Color(0xFFd2d7e8),
                     ),
                   ),
-                  trailing: Icon(
-                    Icons.arrow_right,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Новости',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Полезные ссылки',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Файловый архив',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ExpansionTile(
+                  leading: Icon(
+                    Icons.settings_input_component,
                     color: Color(0xFFd2d7e8),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserInfo(),
-                        ));
-                  },
+                  title: Text(
+                    'Администрирование',
+                    style: TextStyle(
+                      color: Color(0xFFd2d7e8),
+                    ),
+                  ),
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ExpansionTile(
+                        title: Text(
+                          'Сотрудники',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: 25),
+                            child: ListTile(
+                              title: Text(
+                                'Активные',
+                                style: TextStyle(
+                                  color: Color(0xFF767d92),
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 25),
+                            child: ListTile(
+                              title: Text(
+                                'Заблокированные',
+                                style: TextStyle(
+                                  color: Color(0xFF767d92),
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

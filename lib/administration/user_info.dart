@@ -5,13 +5,12 @@ import 'package:sumer_mobile/administration/edit_user_info.dart';
 import 'package:sumer_mobile/model/profile_model.dart';
 import 'package:sumer_mobile/services/auth_service.dart';
 import 'dart:async';
-
 import '../dashboard/global_drawer.dart';
 import '../dashboard/global_appBar.dart';
 import '../global.dart';
 
 class UserInfo extends StatelessWidget {
-  Future<Profile> fetchMyProfile() async {
+  static Future<Profile> fetchMyProfile() async {
     final response = await http.get(
       URL + "api/Account/MyInfo",
       // Send authorization headers to the backend.
@@ -30,6 +29,7 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff4f7f8),
       drawer: GlobalDrawer(),
       appBar: GlobalAppBar(
         title: Container(
@@ -52,6 +52,7 @@ class UserInfo extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Card(
+                    elevation: 0,
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -323,11 +324,12 @@ class UserInfo extends StatelessWidget {
           color: Colors.white,
         ),
         onPressed: () {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (BuildContext context) => EditUserInfo(),
-              ),
-              (Route<dynamic> route) => false);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) => EditUserInfo(),
+            ),
+          );
+          // (Route<dynamic> route) => false);
         },
       ),
     );

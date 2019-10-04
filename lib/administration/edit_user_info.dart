@@ -17,29 +17,8 @@ class EditUserInfo extends StatefulWidget {
 class _EditUserInfoState extends State<EditUserInfo> {
   static String email;
   static String factualAddress;
-  bool isLoading = false;
 
-  // void fetchProducts() {
-  //   http
-  //       .get('https://flutter-products.firebaseio.com/products.json')
-  //       .then((http.Response response) {
-  //     final List<Profile> fetchedProductList = [];
-  //     final Map<String, dynamic> productListData = json.decode(response.body);
-  //     productListData.forEach((String productId, dynamic productData) {
-  //       final Profile userInfo = Profile(
-  //           id: productId,
-  //           title: productData['title'],
-  //           description: productData['description'],
-  //           image: productData['image'],
-  //           price: productData['price'],
-  //           userEmail: productData['userEmail'],
-  //           userId: productData['userId']);
-  //       fetchedProductList.add(userInfo);
-  //     });
-  //     _products = fetchedProductList;
-  //     notifyListeners();
-  //   });
-  // }
+  bool isLoading = false;
 
   Future<Profile> fetchMyProfile() async {
     final response = await http.get(
@@ -66,7 +45,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
     super.initState();
   }
 
-  signIn(String email, factualAddress) async {
+  submit(String email, factualAddress) async {
     Map data = {
       'email': email,
       'factualAddress': factualAddress,
@@ -119,7 +98,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
           setState(() {
             isLoading = true;
           });
-          signIn(emailController.text, factualAddressController.text);
+          submit(emailController.text, factualAddressController.text);
         },
         elevation: 0.0,
         color: Colors.indigoAccent[700],
@@ -166,6 +145,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff4f7f8),
       drawer: GlobalDrawer(),
       appBar: GlobalAppBar(
         title: Container(

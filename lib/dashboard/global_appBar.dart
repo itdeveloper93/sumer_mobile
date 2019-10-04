@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GlobalAppBar extends AppBar {
   GlobalAppBar({Key key, Widget title})
       : super(
-          key: key, title: title,
+          key: key, title: title, elevation: 0.4,
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(Icons.apps, color: Colors.blueAccent[700]),
