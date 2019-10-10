@@ -155,7 +155,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
             style: TextStyle(
                 color: Color(0xFF293148),
                 fontFamily: "Roboto",
-                fontSize: 17,
+                fontSize: 16,
                 fontWeight: FontWeight.bold),
           ),
         ),

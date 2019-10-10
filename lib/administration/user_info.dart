@@ -9,7 +9,21 @@ import '../dashboard/global_drawer.dart';
 import '../dashboard/global_appBar.dart';
 import '../global.dart';
 
-class UserInfo extends StatelessWidget {
+class UserInfo extends StatefulWidget {
+  @override
+  _UserInfoState createState() => _UserInfoState();
+}
+
+class _UserInfoState extends State<UserInfo> {
+  static String email;
+  static String factualAddress;
+
+  @override
+  void initState() {
+    fetchMyProfile();
+    super.initState();
+  }
+
   static Future<Profile> fetchMyProfile() async {
     final response = await http.get(
       URL + "api/Account/MyInfo",
@@ -39,7 +53,7 @@ class UserInfo extends StatelessWidget {
             style: TextStyle(
                 color: Color(0xFF293148),
                 fontFamily: "Roboto",
-                fontSize: 17,
+                fontSize: 16,
                 fontWeight: FontWeight.bold),
           ),
         ),

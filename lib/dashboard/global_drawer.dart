@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sumer_mobile/administration/employees/active_employees_list.dart';
+import 'package:sumer_mobile/administration/employees/locked_employees_list.dart';
 import 'package:sumer_mobile/services/auth_service.dart';
 import '../administration/user_info.dart';
 import '../common/parse_token.dart';
@@ -27,9 +29,11 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
   }
 
   Future<MiniProfile> myProfile() async {
-    return MiniProfile.fromJson(parseJwt(
-      await AuthService.getToken(),
-    ));
+    return MiniProfile.fromJson(
+      parseJwt(
+        await AuthService.getToken(),
+      ),
+    );
   }
 
   @override
@@ -206,6 +210,14 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                                   fontSize: 13,
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ActiveEmployeesList(),
+                                    ));
+                              },
                             ),
                           ),
                           Container(
@@ -218,6 +230,14 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                                   fontSize: 13,
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          LockedEmployeesList(),
+                                    ));
+                              },
                             ),
                           ),
                         ],
