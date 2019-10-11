@@ -42,21 +42,21 @@ class _LoginPageState extends State<LoginPage> {
                     left: 20,
                   ),
                   child: Card(
-                      child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 10,
-                      right: 35,
-                      bottom: 30,
-                      left: 35,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 42,
+                        right: 35,
+                        left: 35,
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          headerSection(),
+                          textSection(),
+                          buttonSection(),
+                        ],
+                      ),
                     ),
-                    child: ListView(
-                      children: <Widget>[
-                        headerSection(),
-                        textSection(),
-                        buttonSection(),
-                      ],
-                    ),
-                  )),
+                  ),
                 ),
         ),
       ),
@@ -66,8 +66,8 @@ class _LoginPageState extends State<LoginPage> {
   signIn(String phoneNumber, password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map data = {
-      'phoneNumber': 919036303,
-      'password': 123123,
+      'phoneNumber': phoneNumber,
+      'password': password,
       'rememberMe': true
     };
     var jsonResponse;
