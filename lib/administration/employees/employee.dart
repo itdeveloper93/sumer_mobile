@@ -41,32 +41,19 @@ class _EmployeeState extends State<Employee>
 
   @override
   void initState() {
-    super.initState();
-    _employee = _loadEmployee(id);
+    _employee = _loadEmployee(this.id);
+    print(this.id);
     controller = TabController(
       length: 2,
       vsync: this,
     );
+    super.initState();
   }
 
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
-  }
-
-  TabBarView headerSection() {
-    return TabBarView(
-      controller: controller,
-      children: [
-        Center(
-          child: Text('Hello'),
-        ),
-        Center(
-          child: Text('Hi'),
-        ),
-      ],
-    );
   }
 
   TabController controller;
@@ -114,9 +101,12 @@ class _EmployeeState extends State<Employee>
                             ),
                             child: CircleAvatar(
                               radius: 50.0,
-                              backgroundImage:
-                                  NetworkImage(snapshot.data.photoPathSmall),
-                              backgroundColor: Colors.blueAccent,
+                              backgroundImage: snapshot.data.photoPathSmall ==
+                                      null
+                                  ? AssetImage('assets/profile.png')
+                                  : NetworkImage(snapshot.data.photoPathSmall),
+                              backgroundColor: Colors.transparent,
+                              // child:
                             ),
                           ),
                           Container(
@@ -175,63 +165,86 @@ class _EmployeeState extends State<Employee>
                               children: <Widget>[
                                 ListTile(
                                   title: Text('Дата рождения: '),
-                                  trailing: Text(snapshot.data.dateOfBirth),
+                                  trailing: Text(
+                                      snapshot.data.dateOfBirth != null
+                                          ? snapshot.data.dateOfBirth
+                                          : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Отдел: '),
-                                  trailing: Text(snapshot.data.department),
+                                  trailing: Text(
+                                      snapshot.data.department != null
+                                          ? snapshot.data.department
+                                          : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Позиция: '),
-                                  trailing: Text(snapshot.data.position),
+                                  trailing: Text(snapshot.data.position != null
+                                      ? snapshot.data.position
+                                      : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Дата приема на работу: '),
-                                  trailing: Text(snapshot.data.hireDate),
+                                  trailing: Text(snapshot.data.hireDate != null
+                                      ? snapshot.data.hireDate
+                                      : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Телефон: '),
-                                  trailing: Text(snapshot.data.phone),
+                                  trailing: Text(snapshot.data.phone != null
+                                      ? snapshot.data.phone
+                                      : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Email: '),
-                                  trailing: Text(snapshot.data.email),
+                                  trailing: Text(snapshot.data.email != null
+                                      ? snapshot.data.email
+                                      : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Фактический адрес: '),
-                                  trailing: Text(snapshot.data.factualAddress),
+                                  trailing: Text(
+                                      snapshot.data.factualAddress != null
+                                          ? snapshot.data.factualAddress
+                                          : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Пол: '),
-                                  trailing: Text(snapshot.data.genderName),
+                                  trailing: Text(
+                                      snapshot.data.genderName != null
+                                          ? snapshot.data.genderName
+                                          : ''),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
                                 ListTile(
                                   title: Text('Дополнительное описание: '),
-                                  subtitle: Text(snapshot.data.description),
+                                  subtitle: Text(
+                                      snapshot.data.description != null
+                                          ? snapshot.data.description
+                                          : ''),
                                 ),
                               ],
                             ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sumer_mobile/administration/employees/employee.dart';
 import 'package:sumer_mobile/dashboard/global_appBar.dart';
 import 'package:sumer_mobile/dashboard/global_drawer.dart';
 import 'package:sumer_mobile/global.dart';
@@ -231,7 +232,13 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         child: ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => Employee(employee.id),
+              ),
+            );
+          },
           // _navigateToFriendDetails(employee, index),
 
           title: Text(employee.fullName),

@@ -14,50 +14,65 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   String token;
+  var _formKey = GlobalKey<FormState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String value) {
+    final snackBar = new SnackBar(
+      content: new Text(value),
+      duration: new Duration(seconds: 3),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
         .copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/bg.jpg"),
-              fit: BoxFit.cover,
+        child: Form(
+          key: _formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/bg.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: _isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding: EdgeInsets.only(
-                    top: 190,
-                    right: 20,
-                    bottom: 180,
-                    left: 20,
-                  ),
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 42,
-                        right: 35,
-                        left: 35,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          headerSection(),
-                          textSection(),
-                          buttonSection(),
-                        ],
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: EdgeInsets.only(
+                      top: 190,
+                      right: 20,
+                      bottom: 183,
+                      left: 20,
+                    ),
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: 42,
+                          right: 35,
+                          left: 35,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            headerSection(),
+                            textSection(),
+                            buttonSection(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+          ),
         ),
       ),
     );
@@ -76,22 +91,25 @@ class _LoginPageState extends State<LoginPage> {
       "content-type": "application/json",
       "accept": "application/json",
     });
-    if (response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
-      if (jsonResponse != null) {
+    switch (response.statusCode) {
+      case 200:
+        jsonResponse = json.decode(response.body);
+        if (jsonResponse != null) {
+          setState(() {
+            _isLoading = false;
+          });
+          sharedPreferences.setString("token", jsonResponse['data']['token']);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+              (Route<dynamic> route) => false);
+        }
+        break;
+      case 400:
+        _showSnackBar('Неверный логин или пароль.');
         setState(() {
           _isLoading = false;
         });
-        sharedPreferences.setString("token", jsonResponse['data']['token']);
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-            (Route<dynamic> route) => false);
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      print(response.body);
+        break;
     }
   }
 
@@ -105,11 +123,7 @@ class _LoginPageState extends State<LoginPage> {
       width: MediaQuery.of(context).size.width,
       height: 55.0,
       child: RaisedButton(
-        onPressed:
-            // emailController.text == "" || passwordController.text == ""
-            //     ? null
-            //     :
-            () {
+        onPressed: () {
           setState(() {
             _isLoading = true;
           });
@@ -133,12 +147,18 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              keyboardType: TextInputType.number,
               controller: emailController,
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.local_phone),
                 border: OutlineInputBorder(),
                 labelText: 'Phone',
               ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Must not be empty!';
+                }
+              },
             ),
           ),
           Container(
@@ -151,6 +171,11 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Password',
                 suffixIcon: Icon(Icons.lock),
               ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Must not be empty!';
+                }
+              },
             ),
           ),
         ],

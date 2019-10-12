@@ -55,7 +55,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                       title: Text('Серия и номер: '),
                       trailing: Text(snapshot.data.passportNumber != null
                           ? snapshot.data.passportNumber
-                          : 'No Data')),
+                          : '')),
                   Divider(
                     color: Colors.black26,
                   ),
@@ -63,7 +63,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                     title: Text('Орган, выдавший паспорт: '),
                     trailing: Text(snapshot.data.passportIssuer != null
                         ? snapshot.data.passportIssuer
-                        : 'No Data'),
+                        : ''),
                   ),
                   Divider(
                     color: Colors.black26,
@@ -72,7 +72,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                     title: Text('Дата выдачи: '),
                     trailing: Text(snapshot.data.passportIssueDate != null
                         ? snapshot.data.passportIssueDate
-                        : 'No Data'),
+                        : ''),
                   ),
                   Divider(
                     color: Colors.black26,
@@ -81,7 +81,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                     title: Text('Национальность: '),
                     trailing: Text(snapshot.data.nationality != null
                         ? snapshot.data.nationality
-                        : 'No Data'),
+                        : ''),
                   ),
                   Divider(
                     color: Colors.black26,
@@ -90,7 +90,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                     title: Text('Дата рождения: '),
                     trailing: Text(snapshot.data.dateOfBirth != null
                         ? snapshot.data.dateOfBirth
-                        : 'No Data'),
+                        : ''),
                   ),
                   Divider(
                     color: Colors.black26,
@@ -99,7 +99,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
                     title: Text('Прописка: '),
                     trailing: Text(snapshot.data.passportAddress != null
                         ? snapshot.data.passportAddress
-                        : 'No Data'),
+                        : ''),
                   ),
                 ],
               ),

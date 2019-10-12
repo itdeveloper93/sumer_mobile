@@ -152,7 +152,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
   var currentSelectedValue;
   var fullName;
   var onlyUser;
-  // static var deviceTypes = [];
 
   Widget _buildDepartmentDropdown() {
     return Container(
@@ -172,7 +171,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
                   setState(() {
                     currentSelectedValue = newValue;
                   });
-                  print(currentSelectedValue);
                 },
                 items: _departments.map((item) {
                   return DropdownMenuItem(
@@ -239,7 +237,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
               ),
             );
           },
-          // _navigateToFriendDetails(employee, index),
           leading: Hero(
             tag: index,
             child: CircleAvatar(
@@ -265,16 +262,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
       ),
     );
   }
-
-  // void _navigateToFriendDetails(Employees friend, Object avatarTag) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (c) {
-  //         return Employee(friend, avatarTag: avatarTag);
-  //       },
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -317,12 +304,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
           color: Colors.white,
         ),
         onPressed: () {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (BuildContext context) => EditUserInfo(),
-          //   ),
-          // );
-          // (Route<dynamic> route) => false);
           _settingModalBottomSheet(context);
         },
       ),
@@ -346,9 +327,6 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
         setState(() {
           isLoading = false;
         });
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(builder: (BuildContext context) => UserInfo()),
-        //     (Route<dynamic> route) => false);
       }
     } else {
       setState(() {
