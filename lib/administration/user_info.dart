@@ -15,12 +15,14 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
+  Future<Profile> _myProfile;
   static String email;
   static String factualAddress;
 
   @override
   void initState() {
-    fetchMyProfile();
+    _myProfile = fetchMyProfile();
+    print(_myProfile);
     super.initState();
   }
 
@@ -32,6 +34,10 @@ class _UserInfoState extends State<UserInfo> {
     );
 
     if (response.statusCode == 200) {
+      Map decoded = json.decode(response.body);
+
+      email = decoded['data']['email'];
+      factualAddress = decoded['data']['factualAddress'];
       // If the call to the server was successful, parse the JSON.
       return Profile.fromJson(json.decode(response.body));
     } else {
@@ -59,7 +65,7 @@ class _UserInfoState extends State<UserInfo> {
         ),
       ),
       body: FutureBuilder<Profile>(
-        future: fetchMyProfile(),
+        future: _myProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView(
@@ -340,7 +346,8 @@ class _UserInfoState extends State<UserInfo> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context) => EditUserInfo(),
+              builder: (BuildContext context) =>
+                  EditUserInfo(_myProfile, email, factualAddress),
             ),
           );
           // (Route<dynamic> route) => false);

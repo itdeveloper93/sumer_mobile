@@ -10,39 +10,28 @@ import '../dashboard/global_appBar.dart';
 import '../global.dart';
 
 class EditUserInfo extends StatefulWidget {
+  final Future<Profile> _myProfile;
+  final String email;
+  final String factualAddress;
+  EditUserInfo(this._myProfile, this.email, this.factualAddress);
   @override
-  _EditUserInfoState createState() => _EditUserInfoState();
+  _EditUserInfoState createState() =>
+      _EditUserInfoState(_myProfile, email, factualAddress);
 }
 
 class _EditUserInfoState extends State<EditUserInfo> {
-  static String email;
-  static String factualAddress;
+  String email;
+  String factualAddress;
+  Future<Profile> _myProfile;
+  _EditUserInfoState(this._myProfile, this.email, this.factualAddress);
 
   bool isLoading = false;
 
-  Future<Profile> fetchMyProfile() async {
-    final response = await http.get(
-      URL + "api/Account/MyInfo",
-      // Send authorization headers to the backend.
-      headers: await AuthService.addAuthTokenToRequest(),
-    );
-
-    if (response.statusCode == 200) {
-      Map decoded = json.decode(response.body);
-      email = decoded['data']['email'];
-      factualAddress = decoded['data']['factualAddress'];
-
-      return Profile.fromJson(json.decode(response.body));
-    } else {
-      // If that call was not successful, throw an error.
-      throw Exception('Failed to load post');
-    }
-  }
-
   @override
   void initState() {
-    fetchMyProfile();
     super.initState();
+    emailController.text = email;
+    factualAddressController.text = factualAddress;
   }
 
   submit(String email, factualAddress) async {
@@ -108,10 +97,9 @@ class _EditUserInfoState extends State<EditUserInfo> {
     );
   }
 
-  final TextEditingController emailController =
-      TextEditingController(text: email);
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController factualAddressController =
-      TextEditingController(text: factualAddress);
+      TextEditingController();
 
   Container textSection() {
     return Container(
@@ -120,7 +108,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
           Container(
             margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
-              controller: emailController,
+              controller: this.emailController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
@@ -130,7 +118,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
           Container(
             margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
-              controller: factualAddressController,
+              controller: this.factualAddressController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Фактический адрес',
@@ -165,7 +153,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
           FocusScope.of(context).unfocus();
         },
         child: FutureBuilder<Profile>(
-          future: fetchMyProfile(),
+          future: _myProfile,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView(
