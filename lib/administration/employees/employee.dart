@@ -21,7 +21,8 @@ class _EmployeeState extends State<Employee>
   Future<employeeFields.Employee> _employee;
   String id;
   _EmployeeState(this.id);
-  bool isLoading = false;
+  bool isLoading = false; // To control switching tabs
+  ScrollController _scrollViewController; // To control scrolling
 
   Future<employeeFields.Employee> _loadEmployee(String id) async {
     final response = await http.get(
@@ -47,12 +48,14 @@ class _EmployeeState extends State<Employee>
       length: 2,
       vsync: this,
     );
+    _scrollViewController = ScrollController();
     super.initState();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    _scrollViewController.dispose();
     super.dispose();
   }
 
@@ -99,14 +102,16 @@ class _EmployeeState extends State<Employee>
                             padding: EdgeInsets.only(
                               top: 30,
                             ),
-                            child: CircleAvatar(
-                              radius: 50.0,
-                              backgroundImage: snapshot.data.photoPathSmall ==
-                                      null
-                                  ? AssetImage('assets/profile.png')
-                                  : NetworkImage(snapshot.data.photoPathSmall),
-                              backgroundColor: Colors.transparent,
-                              // child:
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              child: ClipOval(
+                                child: FadeInImage.assetNetwork(
+                                  fit: BoxFit.cover,
+                                  placeholder: 'assets/noavatar.jpg',
+                                  image: snapshot.data.photoPathSmall,
+                                ),
+                              ),
                             ),
                           ),
                           Container(
@@ -134,117 +139,194 @@ class _EmployeeState extends State<Employee>
                               ),
                             ),
                           ),
-                          TabBar(controller: controller, tabs: <Tab>[
-                            Tab(
-                              child: Text(
-                                'Главное',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                'Паспортные данные',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ])
+                          TabBar(
+                              controller: controller,
+                              indicatorColor: Color(0xFF4f3af1),
+                              tabs: <Tab>[
+                                Tab(
+                                  child: Text(
+                                    'Главное',
+                                    style: TextStyle(color: Color(0xFF848895)),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    'Паспортные данные',
+                                    style: TextStyle(color: Color(0xFF848895)),
+                                  ),
+                                ),
+                              ])
                         ],
                       ),
                     ),
                   ),
                   Container(
-                    height: 720,
-                    child: new TabBarView(
+                    height: 550,
+                    child: TabBarView(
                       controller: controller,
                       children: <Widget>[
                         Card(
                           elevation: 0,
                           child: Container(
-                            padding: EdgeInsets.only(top: 7),
+                            margin: EdgeInsets.only(top: 5),
                             child: Column(
                               children: <Widget>[
-                                ListTile(
-                                  title: Text('Дата рождения: '),
-                                  trailing: Text(
+                                Container(
+                                  height: 50,
+                                  child: ListTile(
+                                    title: Text('Дата рождения '),
+                                    trailing: Text(
                                       snapshot.data.dateOfBirth != null
                                           ? snapshot.data.dateOfBirth
-                                          : ''),
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Отдел: '),
-                                  trailing: Text(
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Отдел '),
+                                    trailing: Text(
                                       snapshot.data.department != null
                                           ? snapshot.data.department
-                                          : ''),
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Позиция: '),
-                                  trailing: Text(snapshot.data.position != null
-                                      ? snapshot.data.position
-                                      : ''),
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Позиция '),
+                                    trailing: Text(
+                                      snapshot.data.position != null
+                                          ? snapshot.data.position
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Дата приема на работу: '),
-                                  trailing: Text(snapshot.data.hireDate != null
-                                      ? snapshot.data.hireDate
-                                      : ''),
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Дата приема на работу '),
+                                    trailing: Text(
+                                      snapshot.data.hireDate != null
+                                          ? snapshot.data.hireDate
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Телефон: '),
-                                  trailing: Text(snapshot.data.phone != null
-                                      ? snapshot.data.phone
-                                      : ''),
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Телефон '),
+                                    trailing: Text(
+                                      snapshot.data.phone != null
+                                          ? snapshot.data.phone
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Email: '),
-                                  trailing: Text(snapshot.data.email != null
-                                      ? snapshot.data.email
-                                      : ''),
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Email '),
+                                    trailing: Text(
+                                      snapshot.data.email != null
+                                          ? snapshot.data.email
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Фактический адрес: '),
-                                  trailing: Text(
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Фактический адрес '),
+                                    trailing: Text(
                                       snapshot.data.factualAddress != null
                                           ? snapshot.data.factualAddress
-                                          : ''),
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Пол: '),
-                                  trailing: Text(
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Пол '),
+                                    trailing: Text(
                                       snapshot.data.genderName != null
                                           ? snapshot.data.genderName
-                                          : ''),
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                                 Divider(
                                   color: Colors.black26,
                                 ),
-                                ListTile(
-                                  title: Text('Дополнительное описание: '),
-                                  subtitle: Text(
+                                Container(
+                                  transform:
+                                      Matrix4.translationValues(0, -7, 0),
+                                  height: 40,
+                                  child: ListTile(
+                                    title: Text('Дополнительное описание '),
+                                    subtitle: Text(
                                       snapshot.data.description != null
                                           ? snapshot.data.description
-                                          : ''),
+                                          : '',
+                                      style:
+                                          TextStyle(color: Color(0xFF9096a9)),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

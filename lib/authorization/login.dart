@@ -154,11 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                 border: OutlineInputBorder(),
                 labelText: 'Phone',
               ),
-              validator: (String value) {
-                if (value.isEmpty) {
-                  return 'Must not be empty!';
-                }
-              },
             ),
           ),
           Container(

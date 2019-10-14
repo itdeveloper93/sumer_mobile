@@ -164,20 +164,21 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
                     borderRadius: BorderRadius.circular(5.0))),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
-                hint: Text("Отдел"),
-                value: currentSelectedValue,
-                isDense: true,
-                onChanged: (newValue) {
-                  setState(() {
-                    currentSelectedValue = newValue;
-                  });
-                },
                 items: _departments.map((item) {
                   return DropdownMenuItem(
                     child: Text(item.name),
                     value: item.id.toString(),
                   );
                 }).toList(),
+                hint: Text("Отдел"),
+                value: currentSelectedValue,
+                isDense: true,
+                onChanged: (value) {
+                  setState(() {
+                    print(value);
+                    currentSelectedValue = value;
+                  });
+                },
               ),
             ),
           );
@@ -227,6 +228,7 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
     var employee = _employees[index];
 
     return Card(
+      elevation: 0.3,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         child: ListTile(
@@ -239,9 +241,16 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
           },
           leading: Hero(
             tag: index,
-            child: CircleAvatar(
-              radius: 25,
-              backgroundImage: NetworkImage(employee.photoPathSmall),
+            child: Container(
+              width: 60,
+              height: 60,
+              child: ClipOval(
+                child: FadeInImage.assetNetwork(
+                  fit: BoxFit.cover,
+                  placeholder: 'assets/noavatar.jpg',
+                  image: employee.photoPathSmall,
+                ),
+              ),
             ),
           ),
           title: Text(employee.fullName),

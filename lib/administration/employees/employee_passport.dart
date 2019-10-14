@@ -13,7 +13,8 @@ class EmployeePassportData extends StatefulWidget {
   _EmployeePassportDataState createState() => _EmployeePassportDataState(id);
 }
 
-class _EmployeePassportDataState extends State<EmployeePassportData> {
+class _EmployeePassportDataState extends State<EmployeePassportData>
+    with AutomaticKeepAliveClientMixin<EmployeePassportData> {
   String id;
   _EmployeePassportDataState(this.id);
   Future<EmployeePassport> _employeePassportData;
@@ -46,60 +47,84 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Card(
+            semanticContainer: true,
             elevation: 0,
             child: Container(
-              padding: EdgeInsets.only(top: 7),
+              padding: EdgeInsets.only(top: 5),
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                      title: Text('Серия и номер: '),
-                      trailing: Text(snapshot.data.passportNumber != null
-                          ? snapshot.data.passportNumber
-                          : '')),
-                  Divider(
-                    color: Colors.black26,
-                  ),
-                  ListTile(
-                    title: Text('Орган, выдавший паспорт: '),
-                    trailing: Text(snapshot.data.passportIssuer != null
-                        ? snapshot.data.passportIssuer
-                        : ''),
+                  Container(
+                    height: 50,
+                    child: ListTile(
+                        title: Text('Серия и номер: '),
+                        trailing: Text(snapshot.data.passportNumber != null
+                            ? snapshot.data.passportNumber
+                            : '')),
                   ),
                   Divider(
                     color: Colors.black26,
                   ),
-                  ListTile(
-                    title: Text('Дата выдачи: '),
-                    trailing: Text(snapshot.data.passportIssueDate != null
-                        ? snapshot.data.passportIssueDate
-                        : ''),
+                  Container(
+                    transform: Matrix4.translationValues(0, -7, 0),
+                    height: 40,
+                    child: ListTile(
+                      title: Text('Орган, выдавший паспорт: '),
+                      trailing: Text(snapshot.data.passportIssuer != null
+                          ? snapshot.data.passportIssuer
+                          : ''),
+                    ),
                   ),
                   Divider(
                     color: Colors.black26,
                   ),
-                  ListTile(
-                    title: Text('Национальность: '),
-                    trailing: Text(snapshot.data.nationality != null
-                        ? snapshot.data.nationality
-                        : ''),
+                  Container(
+                    transform: Matrix4.translationValues(0, -7, 0),
+                    height: 40,
+                    child: ListTile(
+                      title: Text('Дата выдачи: '),
+                      trailing: Text(snapshot.data.passportIssueDate != null
+                          ? snapshot.data.passportIssueDate
+                          : ''),
+                    ),
                   ),
                   Divider(
                     color: Colors.black26,
                   ),
-                  ListTile(
-                    title: Text('Дата рождения: '),
-                    trailing: Text(snapshot.data.dateOfBirth != null
-                        ? snapshot.data.dateOfBirth
-                        : ''),
+                  Container(
+                    transform: Matrix4.translationValues(0, -7, 0),
+                    height: 40,
+                    child: ListTile(
+                      title: Text('Национальность: '),
+                      trailing: Text(snapshot.data.nationality != null
+                          ? snapshot.data.nationality
+                          : ''),
+                    ),
                   ),
                   Divider(
                     color: Colors.black26,
                   ),
-                  ListTile(
-                    title: Text('Прописка: '),
-                    trailing: Text(snapshot.data.passportAddress != null
-                        ? snapshot.data.passportAddress
-                        : ''),
+                  Container(
+                    transform: Matrix4.translationValues(0, -7, 0),
+                    height: 40,
+                    child: ListTile(
+                      title: Text('Дата рождения: '),
+                      trailing: Text(snapshot.data.dateOfBirth != null
+                          ? snapshot.data.dateOfBirth
+                          : ''),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.black26,
+                  ),
+                  Container(
+                    transform: Matrix4.translationValues(0, -7, 0),
+                    height: 40,
+                    child: ListTile(
+                      title: Text('Прописка: '),
+                      trailing: Text(snapshot.data.passportAddress != null
+                          ? snapshot.data.passportAddress
+                          : ''),
+                    ),
                   ),
                 ],
               ),
@@ -118,4 +143,8 @@ class _EmployeePassportDataState extends State<EmployeePassportData> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

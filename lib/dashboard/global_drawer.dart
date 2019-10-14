@@ -73,9 +73,16 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                               fontSize: 14,
                             ),
                           ),
-                          currentAccountPicture: CircleAvatar(
-                            backgroundImage: NetworkImage(snapshot.data.photo),
-                            backgroundColor: Colors.transparent,
+                          currentAccountPicture: Container(
+                            width: 120,
+                            height: 120,
+                            child: ClipOval(
+                              child: FadeInImage.assetNetwork(
+                                fit: BoxFit.cover,
+                                placeholder: 'assets/noavatar.jpg',
+                                image: snapshot.data.photo,
+                              ),
+                            ),
                           ),
                           decoration: BoxDecoration(
                               color: Color(0xFF323C58),
