@@ -1,4 +1,4 @@
-# sumer_mobile
+# SAMR
 
 A new Flutter project.
 

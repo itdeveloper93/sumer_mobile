@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/administration/employees/employee_passport.dart';
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/administration/employees/employee_passport.dart';
+import 'package:SAMR/services/auth_service.dart';
 
-import 'package:sumer_mobile/dashboard/global_appBar.dart';
-import 'package:sumer_mobile/dashboard/global_drawer.dart';
-import 'package:sumer_mobile/global.dart';
-import 'package:sumer_mobile/model/employee.dart' as employeeFields;
+import 'package:SAMR/dashboard/global_appBar.dart';
+import 'package:SAMR/dashboard/global_drawer.dart';
+import 'package:SAMR/global.dart';
+import 'package:SAMR/model/employee.dart' as employeeFields;
 
 class Employee extends StatefulWidget {
   final String id;
@@ -26,7 +26,7 @@ class _EmployeeState extends State<Employee>
 
   Future<employeeFields.Employee> _loadEmployee(String id) async {
     final response = await http.get(
-      URL + "api/Employees/" + id,
+      url + "api/Employees/" + id,
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );

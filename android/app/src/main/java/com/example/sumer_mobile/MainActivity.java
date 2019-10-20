@@ -1,4 +1,4 @@
-package com.example.sumer_mobile;
+package com.example.SAMR;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

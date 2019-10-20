@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/dashboard/home.dart';
+import 'package:SAMR/dashboard/home.dart';
 
 import './authorization/login.dart';
 import 'administration/user_info.dart';

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sumer_mobile/dashboard/home.dart';
-import '../global.dart';
+import 'package:SAMR/dashboard/home.dart';
+import 'package:SAMR/global.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,7 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   String token;
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  bool _validate = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   _showSnackBar(String value) {
@@ -33,12 +34,14 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Form(
           key: _formKey,
+          autovalidate: _validate,
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -87,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
     };
     var jsonResponse;
     var response = await http
-        .post(URL + "api/Auth/Login", body: json.encode(data), headers: {
+        .post(url + "api/Auth/Login", body: json.encode(data), headers: {
       "content-type": "application/json",
       "accept": "application/json",
     });
@@ -124,10 +127,15 @@ class _LoginPageState extends State<LoginPage> {
       height: 55.0,
       child: RaisedButton(
         onPressed: () {
-          setState(() {
-            _isLoading = true;
-          });
-          signIn(emailController.text, passwordController.text);
+          if (_formKey.currentState.validate()) {
+            setState(() {
+              _isLoading = true;
+            });
+            signIn(emailController.text, passwordController.text);
+
+            // Scaffold.of(context)
+            //     .showSnackBar(SnackBar(content: Text('Processing Data')));
+          }
         },
         elevation: 0.0,
         color: Colors.indigoAccent[700],
@@ -154,6 +162,12 @@ class _LoginPageState extends State<LoginPage> {
                 border: OutlineInputBorder(),
                 labelText: 'Phone',
               ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Введите номер телефона';
+                }
+                return null;
+              },
             ),
           ),
           Container(
@@ -166,10 +180,11 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Password',
                 suffixIcon: Icon(Icons.lock),
               ),
-              validator: (String value) {
+              validator: (value) {
                 if (value.isEmpty) {
-                  return 'Must not be empty!';
+                  return 'Введите пароль';
                 }
+                return null;
               },
             ),
           ),

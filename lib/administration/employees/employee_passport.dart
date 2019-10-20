@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/global.dart';
-import 'package:sumer_mobile/model/employee_passport.dart';
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/global.dart';
+import 'package:SAMR/model/employee_passport.dart';
+import 'package:SAMR/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
 class EmployeePassportData extends StatefulWidget {
@@ -26,7 +26,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData>
 
   Future<EmployeePassport> _loadEmployeePassportData(String id) async {
     final response = await http.get(
-      URL + "api/Employees/PassportData/" + id,
+      url + "api/Employees/PassportData/" + id,
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/administration/edit_user_info.dart';
-import 'package:sumer_mobile/model/profile_model.dart';
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/administration/edit_user_info.dart';
+import 'package:SAMR/model/profile_model.dart';
+import 'package:SAMR/services/auth_service.dart';
 import 'dart:async';
 import '../dashboard/global_drawer.dart';
 import '../dashboard/global_appBar.dart';
@@ -22,13 +22,12 @@ class _UserInfoState extends State<UserInfo> {
   @override
   void initState() {
     _myProfile = fetchMyProfile();
-    print(_myProfile);
     super.initState();
   }
 
   static Future<Profile> fetchMyProfile() async {
     final response = await http.get(
-      URL + "api/Account/MyInfo",
+      url + "api/Account/MyInfo",
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );
