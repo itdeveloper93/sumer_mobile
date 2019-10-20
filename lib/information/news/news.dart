@@ -107,7 +107,7 @@ class _NewsListState extends State<NewsList> {
             margin: EdgeInsets.only(top: 10, right: 10, left: 10),
             elevation: 0.8,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -131,7 +131,7 @@ class _NewsListState extends State<NewsList> {
                           bottom: 5,
                         ),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.75,
                           child: Text(
                             news[i].title != null ? news[i].title : '',
                             style: TextStyle(

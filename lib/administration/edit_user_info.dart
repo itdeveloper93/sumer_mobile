@@ -76,14 +76,10 @@ class _EditUserInfoState extends State<EditUserInfo> {
 
   Container buttonSection() {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 55.0,
+      height: MediaQuery.of(context).size.height * 0.07,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: RaisedButton(
-        onPressed:
-            // emailController.text == "" || factualAddressController.text == ""
-            //     ? null
-            //     :
-            () {
+        onPressed: () {
           setState(() {
             isLoading = true;
           });
@@ -160,6 +156,8 @@ class _EditUserInfoState extends State<EditUserInfo> {
                 children: <Widget>[
                   Container(
                     child: Card(
+                      margin: EdgeInsets.only(),
+                      elevation: 0,
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -207,13 +205,17 @@ class _EditUserInfoState extends State<EditUserInfo> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(
-                      top: 5,
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      left: 10,
+                      right: 10,
                     ),
                     child: Card(
                       child: Container(
-                        padding: EdgeInsets.only(
-                            top: 20, right: 25, bottom: 25, left: 25),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[

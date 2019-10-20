@@ -19,7 +19,7 @@ class _UsefulLinkState extends State<UsefulLink> {
         title: Container(
           transform: Matrix4.translationValues(-20, 1, 0),
           child: Text(
-            'Новости',
+            'Полезные ссылки',
             style: TextStyle(
                 color: Color(0xFF293148),
                 fontFamily: "Roboto",
@@ -98,7 +98,10 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
           margin: EdgeInsets.only(top: 10, right: 10, left: 10),
           elevation: 0.3,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 20,
+            ),
             child: Column(
               children: <Widget>[
                 Row(
@@ -110,7 +113,7 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                         bottom: 5,
                       ),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: MediaQuery.of(context).size.width * 0.75,
                         child: Text(
                           usefulLinks[i].title != null
                               ? usefulLinks[i].title

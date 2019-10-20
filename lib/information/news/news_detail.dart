@@ -83,7 +83,10 @@ class _NewsDetailState extends State<NewsDetail>
                       margin: EdgeInsets.only(top: 10, right: 10, left: 10),
                       elevation: 0.3,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
                         child: Column(
                           children: <Widget>[
                             Container(

@@ -231,7 +231,10 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
     return Card(
       margin: EdgeInsets.only(top: 10, right: 10, left: 10),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 10,
+        ),
         child: ListTile(
           onTap: () {
             Navigator.of(context).push(

@@ -231,7 +231,9 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
       margin: EdgeInsets.only(top: 10, right: 10, left: 10),
       elevation: 0.8,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(
+          vertical: 10,
+        ),
         child: ListTile(
           onTap: () {
             Navigator.of(context).push(

@@ -71,6 +71,7 @@ class _UserInfoState extends State<UserInfo> {
               children: <Widget>[
                 Container(
                   child: Card(
+                    margin: EdgeInsets.only(),
                     elevation: 0,
                     child: Column(
                       children: <Widget>[
@@ -119,8 +120,10 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(
-                    top: 5,
+                  margin: EdgeInsets.only(
+                    top: 10,
+                    left: 10,
+                    right: 10,
                   ),
                   child: Card(
                     child: Container(
