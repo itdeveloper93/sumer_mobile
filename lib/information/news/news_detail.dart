@@ -30,8 +30,6 @@ class _NewsDetailState extends State<NewsDetail>
     );
 
     if (response.statusCode == 200) {
-      print('working');
-      print(json.decode(response.body));
       // If the call to the server was successful, parse the JSON.
       return NewsDetailModel.fromJson(json.decode(response.body));
     } else {

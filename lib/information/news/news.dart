@@ -1,8 +1,7 @@
 import 'package:SAMR/dashboard/global_appBar.dart';
 import 'package:SAMR/dashboard/global_drawer.dart';
-import 'package:SAMR/information/news_detail.dart';
+import 'package:SAMR/information/news/news_detail.dart';
 import 'package:SAMR/model/news_list_model.dart';
-import 'package:SAMR/model/news_model.dart';
 import 'package:SAMR/requests/news_request.dart';
 import 'package:flutter/material.dart';
 

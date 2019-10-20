@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:SAMR/information/usefulLink/usefulLink.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/active_employees_list.dart';
 import 'package:SAMR/administration/employees/locked_employees_list.dart';
-import 'package:SAMR/information/news.dart';
+import 'package:SAMR/information/news/news.dart';
 import 'package:SAMR/services/auth_service.dart';
 import '../administration/user_info.dart';
 import '../common/parse_token.dart';
@@ -180,7 +181,7 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => News(),
+                                builder: (context) => UsefulLink(),
                               ));
                         },
                       ),

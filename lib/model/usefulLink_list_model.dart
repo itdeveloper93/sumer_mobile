@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-class NewsPages {
-  List<NewsData> results;
+class UsefulLinkPages {
+  List<UsefulLinkModel> results;
   int page;
   int totalPages;
   int totalCount;
   int pageSize;
 
-  NewsPages({
+  UsefulLinkPages({
     this.results,
     this.page,
     this.totalPages,
@@ -15,14 +15,15 @@ class NewsPages {
     this.totalCount,
   });
 
-  factory NewsPages.fromRawJson(String str) =>
-      NewsPages.fromJson(json.decode(str));
+  factory UsefulLinkPages.fromRawJson(String str) =>
+      UsefulLinkPages.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory NewsPages.fromJson(Map<String, dynamic> json) => new NewsPages(
-        results: List<NewsData>.from(
-            json['data']['items'].map((x) => NewsData.fromMap(x))),
+  factory UsefulLinkPages.fromJson(Map<String, dynamic> json) =>
+      new UsefulLinkPages(
+        results: List<UsefulLinkModel>.from(
+            json['data']['items'].map((x) => UsefulLinkModel.fromMap(x))),
         page: json['data']["page"],
         totalPages: json['data']["totalPages"],
       );
@@ -34,15 +35,16 @@ class NewsPages {
       };
 }
 
-class NewsData {
-  NewsData({
+class UsefulLinkModel {
+  UsefulLinkModel({
     this.id,
+    this.usefulLinkCategoryId,
+    this.usefulLinkCategoryName,
+    this.url,
     this.title,
-    this.shortDescription,
-    this.publishAt,
-    this.newsCategoryName,
-    this.imagePath,
+    this.description,
     this.isActive,
+    this.createdAt,
     this.fullName,
     this.photoPath,
     this.employeeId,
@@ -50,36 +52,38 @@ class NewsData {
   });
 
   final String id;
+  final String usefulLinkCategoryId;
+  final String usefulLinkCategoryName;
+  final String url;
   final String title;
-  final String shortDescription;
-  final String publishAt;
-  final String newsCategoryName;
-  final String imagePath;
+  final String description;
   final bool isActive;
+  final String createdAt;
   final String fullName;
   final String photoPath;
   final String employeeId;
   final String positionName;
 
-  static List<NewsData> allFromResponse(String response) {
+  static List<UsefulLinkModel> allFromResponse(String response) {
     var decodedJson = json.decode(response).cast<String, dynamic>();
 
     return decodedJson['data']['items']
         .cast<Map<String, dynamic>>()
-        .map((obj) => NewsData.fromMap(obj))
+        .map((obj) => UsefulLinkModel.fromMap(obj))
         .toList()
-        .cast<NewsData>();
+        .cast<UsefulLinkModel>();
   }
 
-  static NewsData fromMap(Map map) {
-    return new NewsData(
+  static UsefulLinkModel fromMap(Map map) {
+    return new UsefulLinkModel(
       id: map['id'],
+      usefulLinkCategoryId: map['usefulLinkCategoryId'],
+      usefulLinkCategoryName: map['usefulLinkCategoryName'],
+      url: map['url'],
       title: map['title'],
-      shortDescription: map['shortDescription'],
-      publishAt: map['publishAt'],
-      newsCategoryName: map['newsCategoryName'],
-      imagePath: map['imagePath'],
+      description: map['description'],
       isActive: map['isActive'],
+      createdAt: map['createdAt'],
       fullName: map['author']['fullName'],
       photoPath: map['author']['photoPath'],
       employeeId: map['author']['employeeId'],
@@ -89,12 +93,13 @@ class NewsData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "usefulLinkCategoryId": usefulLinkCategoryId,
+        "usefulLinkCategoryName": usefulLinkCategoryName,
+        "url": url,
         "title": title,
-        "shortDescription": shortDescription,
-        "publishAt": publishAt,
-        "newsCategoryName": newsCategoryName,
-        "imagePath": imagePath,
+        "description": description,
         "isActive": isActive,
+        "createdAt": createdAt,
         "fullName": fullName,
         "photoPath": photoPath,
         "employeeId": employeeId,
