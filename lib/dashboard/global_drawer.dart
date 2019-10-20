@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/administration/employees/active_employees_list.dart';
-import 'package:sumer_mobile/administration/employees/locked_employees_list.dart';
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/administration/employees/active_employees_list.dart';
+import 'package:SAMR/administration/employees/locked_employees_list.dart';
+import 'package:SAMR/information/news.dart';
+import 'package:SAMR/services/auth_service.dart';
 import '../administration/user_info.dart';
 import '../common/parse_token.dart';
 import '../model/mini_profile.dart';
@@ -156,6 +157,13 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                             fontSize: 13,
                           ),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => News(),
+                              ));
+                        },
                       ),
                     ),
                     Container(
@@ -168,6 +176,13 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                             fontSize: 13,
                           ),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => News(),
+                              ));
+                        },
                       ),
                     ),
                     Container(

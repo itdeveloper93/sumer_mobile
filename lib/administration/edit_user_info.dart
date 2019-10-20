@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/administration/user_info.dart';
-import 'package:sumer_mobile/model/profile_model.dart';
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/administration/user_info.dart';
+import 'package:SAMR/model/profile_model.dart';
+import 'package:SAMR/services/auth_service.dart';
 
 import '../dashboard/global_drawer.dart';
 import '../dashboard/global_appBar.dart';
@@ -41,7 +41,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
     };
     var jsonResponse;
     var response = await http.put(
-      URL + "api/Account",
+      url + "api/Account",
       body: json.encode(data),
       headers: await AuthService.addAuthTokenToRequest(),
     );

@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sumer_mobile/administration/employees/employee.dart';
-import 'package:sumer_mobile/dashboard/global_appBar.dart';
-import 'package:sumer_mobile/dashboard/global_drawer.dart';
-import 'package:sumer_mobile/global.dart';
-import 'package:sumer_mobile/model/departments_select_list.dart';
-import 'package:sumer_mobile/model/employees.dart';
+import 'package:SAMR/administration/employees/employee.dart';
+import 'package:SAMR/dashboard/global_appBar.dart';
+import 'package:SAMR/dashboard/global_drawer.dart';
+import 'package:SAMR/global.dart';
+import 'package:SAMR/model/departments_select_list.dart';
+import 'package:SAMR/model/employees.dart';
 import 'package:http/http.dart' as http;
-import 'package:sumer_mobile/services/auth_service.dart';
+import 'package:SAMR/services/auth_service.dart';
 
 class LockedEmployeesList extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
   Future<void> _loadLockedEmployees() async {
     isLoading = false;
     http.Response response = await http.get(
-      URL +
+      url +
           'api/Employees/Locked?fullName=${fullNameController.text}&departmentId=${currentSelectedValue}&onlyUsers=${switchOn}',
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
@@ -55,7 +55,7 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
 
   Future<void> _loadDepartmentsSelectList() async {
     http.Response response = await http.get(
-      URL + 'api/Departments/SelectListItems',
+      url + 'api/Departments/SelectListItems',
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );
@@ -286,6 +286,10 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
           backgroundColor: Colors.blueAccent,
         ),
       );
+    } else if (_employees.length == null) {
+      content = Center(
+        child: Text('No Data exist!'),
+      );
     } else {
       content = ListView.builder(
         itemCount: _employees.length,
@@ -336,7 +340,7 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
     };
     var jsonResponse;
     var response = await http.put(
-      URL + "api/Account",
+      url + "api/Account",
       body: json.encode(data),
       headers: await AuthService.addAuthTokenToRequest(),
     );

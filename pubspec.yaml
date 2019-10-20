@@ -1,4 +1,4 @@
-name: sumer_mobile
+name: SAMR
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
   http: 0.12.0+2  
   shared_preferences: 0.5.3+4
-  dio: 3.0.2
+  dio: 3.0.3
   jaguar_jwt: 2.1.6
   basic_utils: 2.0.2
   cached_network_image: 1.1.1
@@ -33,6 +33,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: 0.7.3
+
+flutter_icons:
+  image_path: "icon/icon.png" 
+  android: true
+  ios: true
 
 
 # For information on the generic Dart part of this file, see the
@@ -52,6 +58,10 @@ flutter:
    - assets/company-logo.png
    - assets/drawer-bg2.jpeg
    - assets/noavatar.jpg
+   - assets/image-placeholder.svg
+   - assets/image-placeholder.png
+   - assets/green-icon.png
+   - assets/red-icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
