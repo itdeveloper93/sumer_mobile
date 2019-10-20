@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:SAMR/common/labeled_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/employee.dart';
 import 'package:SAMR/dashboard/global_appBar.dart';
@@ -24,7 +25,9 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
   bool switchOn = false;
 
   void _onSwitchChanged(bool value) {
-    switchOn = true;
+    setState(() {
+      switchOn = value;
+    });
   }
 
   @override
@@ -204,19 +207,16 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
           _buildDepartmentDropdown(),
           Container(
             margin: EdgeInsets.only(bottom: 10),
-            child: ListTile(
-              title: Container(
-                transform: Matrix4.translationValues(-13, 0, 0),
-                child: Text('Только пользователи'),
-              ),
-              trailing: Container(
-                transform: Matrix4.translationValues(22, 0, 0),
-                child: Switch(
-                  activeColor: Colors.blueAccent,
-                  onChanged: _onSwitchChanged,
-                  value: switchOn,
-                ),
-              ),
+            child: LabeledSwitch(
+              label: 'Только пользователи',
+              labelSize: 15,
+              activeColor: Colors.blueAccent,
+              value: switchOn,
+              onChanged: (bool newValue) {
+                setState(() {
+                  switchOn = newValue;
+                });
+              },
             ),
           ),
         ],
@@ -228,7 +228,8 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
     var employee = _employees[index];
 
     return Card(
-      elevation: 0.3,
+      margin: EdgeInsets.only(top: 10, right: 10, left: 10),
+      elevation: 0.8,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         child: ListTile(
@@ -248,7 +249,7 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
                 child: FadeInImage.assetNetwork(
                   fit: BoxFit.cover,
                   placeholder: 'assets/noavatar.jpg',
-                  image: employee.photoPathSmall,
+                  image: employee.photoPathSmall.toString(),
                 ),
               ),
             ),
@@ -278,13 +279,13 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
 
     if (_employees.isEmpty) {
       content = Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.blueAccent,
-        ),
+        child: Text('No Data exist!'),
       );
     } else if (_employees.length == null) {
       content = Center(
-        child: Text('No Data exist!'),
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.blueAccent,
+        ),
       );
     } else {
       content = ListView.builder(

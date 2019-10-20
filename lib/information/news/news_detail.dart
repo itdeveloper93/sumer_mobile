@@ -80,7 +80,7 @@ class _NewsDetailState extends State<NewsDetail>
                 children: <Widget>[
                   Container(
                     child: Card(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: EdgeInsets.only(top: 10, right: 10, left: 10),
                       elevation: 0.3,
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),

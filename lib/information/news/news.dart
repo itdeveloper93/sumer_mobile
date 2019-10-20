@@ -104,10 +104,10 @@ class _NewsListState extends State<NewsList> {
             );
           },
           child: Card(
-            margin: EdgeInsets.only(bottom: 15),
-            elevation: 0.3,
+            margin: EdgeInsets.only(top: 10, right: 10, left: 10),
+            elevation: 0.8,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -240,7 +240,7 @@ class _NewsListState extends State<NewsList> {
                         ),
                       ),
                       subtitle: Container(
-                        transform: Matrix4.translationValues(-5, 0, 0),
+                        transform: Matrix4.translationValues(-5, -5, 0),
                         child: Text(
                           news[i].positionName != null
                               ? news[i].positionName

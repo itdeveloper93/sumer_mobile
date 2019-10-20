@@ -166,6 +166,7 @@ class _EmployeeState extends State<Employee>
                       controller: controller,
                       children: <Widget>[
                         Card(
+                          margin: EdgeInsets.only(top: 5, right: 10, left: 10),
                           elevation: 0,
                           child: Container(
                             margin: EdgeInsets.only(top: 5),

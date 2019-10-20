@@ -17,6 +17,26 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _validate = false;
 
+  _validatePhone(var value) {
+    if (phoneController.toString().isEmpty) {
+      switch (value) {
+        case '':
+          return _showSnackBar('Номер телефона и пароль обязательно');
+          break;
+      }
+    }
+  }
+
+  _validatePassword(var value) {
+    if (phoneController.toString().isNotEmpty) {
+      switch (value) {
+        case '':
+          return _showSnackBar('Номер телефона и пароль обязательно');
+          break;
+      }
+    }
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   _showSnackBar(String value) {
     final snackBar = new SnackBar(
@@ -49,32 +69,30 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: _isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Padding(
-                    padding: EdgeInsets.only(
-                      top: 190,
-                      right: 20,
-                      bottom: 183,
-                      left: 20,
-                    ),
-                    child: Card(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: 42,
-                          right: 35,
-                          left: 35,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            headerSection(),
-                            textSection(),
-                            buttonSection(),
-                          ],
+            child: Center(
+              child: _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.55,
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 43,
+                            right: 35,
+                            left: 35,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              headerSection(),
+                              textSection(),
+                              buttonSection(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+            ),
           ),
         ),
       ),
@@ -108,7 +126,9 @@ class _LoginPageState extends State<LoginPage> {
         }
         break;
       case 400:
-        _showSnackBar('Неверный логин или пароль.');
+        if (phoneNumber.isNotEmpty && password.toString().isNotEmpty) {
+          _showSnackBar('Неверный логин или пароль.');
+        }
         setState(() {
           _isLoading = false;
         });
@@ -131,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
             setState(() {
               _isLoading = true;
             });
-            signIn(emailController.text, passwordController.text);
+            signIn(phoneController.text, passwordController.text);
 
             // Scaffold.of(context)
             //     .showSnackBar(SnackBar(content: Text('Processing Data')));
@@ -145,27 +165,26 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController phoneController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
   Container textSection() {
     return Container(
+      width: MediaQuery.of(context).size.width,
       child: Column(
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               keyboardType: TextInputType.number,
-              controller: emailController,
+              controller: phoneController,
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.local_phone),
                 border: OutlineInputBorder(),
                 labelText: 'Phone',
               ),
               validator: (value) {
-                if (value.isEmpty) {
-                  return 'Введите номер телефона';
-                }
+                _validatePhone(value);
                 return null;
               },
             ),
@@ -181,9 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                 suffixIcon: Icon(Icons.lock),
               ),
               validator: (value) {
-                if (value.isEmpty) {
-                  return 'Введите пароль';
-                }
+                _validatePassword(value);
                 return null;
               },
             ),
@@ -195,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Container headerSection() {
     return Container(
-      margin: EdgeInsets.only(bottom: 50.0),
+      margin: EdgeInsets.only(bottom: 35.0),
       // padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: <Widget>[

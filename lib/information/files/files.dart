@@ -221,7 +221,7 @@ class _FilesListState extends State<FilesList> {
                       ),
                     ),
                     subtitle: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
+                      transform: Matrix4.translationValues(-5, -5, 0),
                       child: Text(
                         files[i].positionName != null
                             ? files[i].positionName

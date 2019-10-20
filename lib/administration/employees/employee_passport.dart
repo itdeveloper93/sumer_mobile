@@ -47,6 +47,7 @@ class _EmployeePassportDataState extends State<EmployeePassportData>
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Card(
+            margin: EdgeInsets.only(top: 5, right: 10, left: 10),
             semanticContainer: true,
             elevation: 0,
             child: Container(

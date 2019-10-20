@@ -95,10 +95,10 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
       controller: scrollController,
       itemBuilder: (BuildContext c, int i) {
         return Card(
-          margin: EdgeInsets.only(bottom: 15),
+          margin: EdgeInsets.only(top: 10, right: 10, left: 10),
           elevation: 0.3,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: <Widget>[
                 Row(
@@ -223,7 +223,7 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                       ),
                     ),
                     subtitle: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
+                      transform: Matrix4.translationValues(-5, -5, 0),
                       child: Text(
                         usefulLinks[i].positionName != null
                             ? usefulLinks[i].positionName

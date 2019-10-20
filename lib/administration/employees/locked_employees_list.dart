@@ -229,6 +229,7 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
     var employee = _employees[index];
 
     return Card(
+      margin: EdgeInsets.only(top: 10, right: 10, left: 10),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         child: ListTile(
@@ -241,27 +242,37 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
           },
           // _navigateToFriendDetails(employee, index),
 
-          title: Text(employee.fullName),
+          title: Text(employee.fullName.toString()),
           subtitle: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(bottom: 3),
-                child: Text(employee.department + ' › ' + employee.position),
+                child: Text(employee.department.toString() +
+                    ' › ' +
+                    employee.position.toString()),
               ),
               Container(
-                child: Text('Дата приема: ' + employee.hireDate),
+                child: Text('Дата приема: ' + employee.hireDate.toString()),
               ),
               Container(
-                child: Text('Дата блокировки: ' + employee.lockDate),
+                child: Text('Дата блокировки: ' + employee.lockDate.toString()),
               ),
               Container(
-                child: Text(employee.lockReason),
+                child: Text(employee.lockReason.toString()),
               )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCircularProgressIndicator(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.blueAccent,
       ),
     );
   }
@@ -271,12 +282,6 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
     Widget content;
 
     if (_employees.isEmpty) {
-      content = Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.blueAccent,
-        ),
-      );
-    } else if (_employees.length == null) {
       content = Center(
         child: Text('No Data exist!'),
       );
