@@ -1,5 +1,6 @@
 import 'package:SAMR/dashboard/global_appBar.dart';
 import 'package:SAMR/dashboard/global_drawer.dart';
+import 'package:SAMR/information/news_detail.dart';
 import 'package:SAMR/model/news_list_model.dart';
 import 'package:SAMR/model/news_model.dart';
 import 'package:SAMR/requests/news_request.dart';
@@ -95,157 +96,166 @@ class _NewsListState extends State<NewsList> {
       itemCount: news.length,
       controller: scrollController,
       itemBuilder: (BuildContext c, int i) {
-        return Card(
-          margin: EdgeInsets.only(bottom: 15),
-          elevation: 0.3,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: news[i].imagePath.isNotEmpty
-                      ? Container(
-                          child: Image.network(
-                            news[i].photoPath,
-                            height: 300,
-                            width: 410,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Container(),
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: 17,
-                        top: 25,
-                        bottom: 5,
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: Text(
-                          news[i].title != null ? news[i].title : '',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: news[i].isActive
-                          ? Container(
-                              width: 11,
-                              child: Image.asset('assets/green-icon.png'),
-                            )
-                          : Container(
-                              width: 16,
-                              child: Image.asset('assets/red-icon.png'),
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => NewsDetail(news[i].id),
+              ),
+            );
+          },
+          child: Card(
+            margin: EdgeInsets.only(bottom: 15),
+            elevation: 0.3,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: news[i].imagePath.isNotEmpty
+                        ? Container(
+                            child: Image.network(
+                              news[i].photoPath,
+                              height: 300,
+                              width: 410,
+                              fit: BoxFit.cover,
                             ),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 16, top: 1, bottom: 10),
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          )
+                        : Container(),
+                  ),
+                  Row(
                     children: <Widget>[
-                      Icon(
-                        Icons.folder,
-                        size: 16,
-                        color: Color(0xff9da1ac),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        news[i].newsCategoryName != null
-                            ? news[i].newsCategoryName
-                            : '',
-                        style: TextStyle(
-                          color: Color(0xff9da1ac),
-                          fontSize: 13,
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 17,
+                          top: 25,
+                          bottom: 5,
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: Text(
+                            news[i].title != null ? news[i].title : '',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
-                      Spacer(),
-                      Icon(
-                        Icons.date_range,
-                        size: 16,
-                        color: Color(0xff9da1ac),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        news[i].publishAt != null ? news[i].publishAt : '',
-                        style: TextStyle(
-                          color: Color(0xff9da1ac),
-                          fontSize: 13,
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 16))
+                      Container(
+                        child: news[i].isActive
+                            ? Container(
+                                width: 11,
+                                child: Image.asset('assets/green-icon.png'),
+                              )
+                            : Container(
+                                width: 16,
+                                child: Image.asset('assets/red-icon.png'),
+                              ),
+                      )
                     ],
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    news[i].shortDescription.isNotEmpty
-                        ? news[i].shortDescription
-                        : '',
-                    style: TextStyle(
-                      color: Color(0xff30384d),
-                      height: 1.4,
+                  Container(
+                    padding: EdgeInsets.only(left: 16, top: 1, bottom: 10),
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          Icons.folder,
+                          size: 16,
+                          color: Color(0xff9da1ac),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          news[i].newsCategoryName != null
+                              ? news[i].newsCategoryName
+                              : '',
+                          style: TextStyle(
+                            color: Color(0xff9da1ac),
+                            fontSize: 13,
+                          ),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.date_range,
+                          size: 16,
+                          color: Color(0xff9da1ac),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          news[i].publishAt != null ? news[i].publishAt : '',
+                          style: TextStyle(
+                            color: Color(0xff9da1ac),
+                            fontSize: 13,
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.only(right: 16))
+                      ],
                     ),
-                    textAlign: TextAlign.left,
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    bottom: 10,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      news[i].shortDescription.isNotEmpty
+                          ? news[i].shortDescription
+                          : '',
+                      style: TextStyle(
+                        color: Color(0xff30384d),
+                        height: 1.4,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                  child: ListTile(
-                    leading: Container(
-                      width: 40,
-                      height: 40,
-                      child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: 'assets/noavatar.jpg',
-                          image: news[i].photoPath,
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: ListTile(
+                      leading: Container(
+                        width: 40,
+                        height: 40,
+                        child: ClipOval(
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: 'assets/noavatar.jpg',
+                            image: news[i].photoPath,
+                          ),
+                        ),
+                      ),
+                      title: Container(
+                        transform: Matrix4.translationValues(-5, 0, 0),
+                        child: Text(
+                          news[i].fullName.isNotEmpty
+                              ? news[i].fullName
+                              : 'Full Name',
+                          style: TextStyle(
+                            color: Color(0xffa9b3d3),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      subtitle: Container(
+                        transform: Matrix4.translationValues(-5, 0, 0),
+                        child: Text(
+                          news[i].positionName != null
+                              ? news[i].positionName
+                              : 'Position',
+                          style: TextStyle(
+                            color: Color(0xffa9b3d3),
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
-                    title: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
-                      child: Text(
-                        news[i].fullName.isNotEmpty
-                            ? news[i].fullName
-                            : 'Full Name',
-                        style: TextStyle(
-                          color: Color(0xffa9b3d3),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    subtitle: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
-                      child: Text(
-                        news[i].positionName != null
-                            ? news[i].positionName
-                            : 'Position',
-                        style: TextStyle(
-                          color: Color(0xffa9b3d3),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
