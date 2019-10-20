@@ -266,16 +266,6 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
     );
   }
 
-  // void _navigateToFriendDetails(Employees friend, Object avatarTag) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (c) {
-  //         return FriendDetailsPage(friend, avatarTag: avatarTag);
-  //       },
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     Widget content;

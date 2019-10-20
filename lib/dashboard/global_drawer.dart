@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:SAMR/information/files/files.dart';
 import 'package:SAMR/information/usefulLink/usefulLink.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/active_employees_list.dart';
@@ -196,6 +197,13 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                             fontSize: 13,
                           ),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Files(),
+                              ));
+                        },
                       ),
                     ),
                   ],
