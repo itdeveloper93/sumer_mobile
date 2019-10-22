@@ -68,7 +68,7 @@ class _LastNewsListTitleState extends State<LastNewsListTitle>
                     child: ClipOval(
                       child: FadeInImage.assetNetwork(
                         fit: BoxFit.cover,
-                        placeholder: 'assets/noavatar.jpg',
+                        placeholder: 'assets/image-placeholder.png',
                         image: _lastNewsData[index].photoPath,
                       ),
                     ),

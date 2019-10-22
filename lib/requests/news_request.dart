@@ -18,10 +18,10 @@ class NewsRequest implements NewsRepository {
     }
   }
 
-  Future<int> loadNewsTotalCount() async {
-    var _news;
+  Future<int> loadUsersTotalCount() async {
+    var _users;
     final response = await http.get(
-      url + "api/News",
+      url + "api/Employees?OnlyUsers=true",
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );
@@ -29,7 +29,7 @@ class NewsRequest implements NewsRepository {
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON.
       Map decoded = json.decode(response.body);
-      return _news = decoded['data']['totalCount'];
+      return _users = decoded['data']['totalCount'];
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
@@ -39,5 +39,5 @@ class NewsRequest implements NewsRepository {
 
 abstract class NewsRepository {
   Future<NewsPages> loadNews(int pageNumber);
-  Future<int> loadNewsTotalCount();
+  Future<int> loadUsersTotalCount();
 }

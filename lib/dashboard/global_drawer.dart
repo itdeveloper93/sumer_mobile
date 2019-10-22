@@ -243,7 +243,7 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          ActiveEmployeesList(),
+                                          ActiveEmployeesList(null),
                                     ));
                               },
                             ),

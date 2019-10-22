@@ -12,13 +12,18 @@ import 'package:http/http.dart' as http;
 import 'package:SAMR/services/auth_service.dart';
 
 class ActiveEmployeesList extends StatefulWidget {
+  final bool onlyUsers;
+  ActiveEmployeesList(this.onlyUsers);
   @override
-  _ActiveEmployeesListState createState() => _ActiveEmployeesListState();
+  _ActiveEmployeesListState createState() =>
+      _ActiveEmployeesListState(this.onlyUsers);
 }
 
 class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
   List<ActiveEmployees> _employees = [];
   List<DepartmentsSelectList> _departments = [];
+
+  _ActiveEmployeesListState(this.switchOn);
 
   bool isLoading;
   bool switchOn = false;
@@ -134,7 +139,7 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
 
               // Navigator.pop(context);
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => ActiveEmployeesList()));
+                  MaterialPageRoute(builder: (_) => ActiveEmployeesList(null)));
             },
             elevation: 0.0,
             color: Color(0xFFecf0f5),

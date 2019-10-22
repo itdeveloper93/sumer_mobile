@@ -19,9 +19,13 @@ class _HomePageState extends State<HomePage> {
   int employeesTotalCount;
   int newsTotalCount;
   Widget lastnews;
+  bool onlyUsers = true;
   @override
   void initState() {
     checkLoginStatus();
+    setState(() {
+      onlyUsers = true;
+    });
     super.initState();
   }
 
@@ -39,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         employeesTotalCount = value;
       });
     });
-    NewsRequest().loadNewsTotalCount().then((value) {
+    NewsRequest().loadUsersTotalCount().then((value) {
       setState(() {
         newsTotalCount = value;
       });
@@ -75,74 +79,77 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ActiveEmployeesList(),
+                      builder: (context) => ActiveEmployeesList(null),
                     ),
                   );
                 },
-                child: Card(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                    left: 13,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.bottomRight,
-                        image: ExactAssetImage('assets/contact_calendar.png'),
+                child: Container(
+                  width: 200,
+                  child: Card(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      left: 13,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          alignment: Alignment.bottomRight,
+                          image: ExactAssetImage('assets/contact_calendar.png'),
+                        ),
                       ),
-                    ),
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            'СОТРУДНИКОВ',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff465179),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              'СОТРУДНИКОВ',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff465179),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Text(
-                            employeesTotalCount == null
-                                ? ''
-                                : employeesTotalCount.toString(),
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: Color(0xff858ca1),
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            child: Text(
+                              employeesTotalCount == null
+                                  ? ''
+                                  : employeesTotalCount.toString(),
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Color(0xff858ca1),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'Посмотреть всех',
-                                style: TextStyle(
-                                  color: Color(0xff858ca2),
-                                  fontSize: 16,
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Посмотреть всех',
+                                  style: TextStyle(
+                                    color: Color(0xff858ca2),
+                                    fontSize: 12,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Color(0xff858ca2),
-                                size: 20,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Color(0xff858ca2),
+                                  size: 20,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -152,74 +159,77 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => News(),
+                      builder: (context) => ActiveEmployeesList(onlyUsers),
                     ),
                   );
                 },
-                child: Card(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                    right: 13,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.bottomRight,
-                        image: ExactAssetImage('assets/library_book.png'),
+                child: Container(
+                  width: 200,
+                  child: Card(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      right: 13,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          alignment: Alignment.bottomRight,
+                          image: ExactAssetImage('assets/library_book.png'),
+                        ),
                       ),
-                    ),
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            'НОВОСТИ',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff465179),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              'ПОЛЬЗОВАТЕЛЕЙ',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff465179),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Text(
-                            newsTotalCount == null
-                                ? ''
-                                : newsTotalCount.toString(),
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: Color(0xff858ca1),
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            child: Text(
+                              newsTotalCount == null
+                                  ? ''
+                                  : newsTotalCount.toString(),
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Color(0xff858ca1),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'Посмотреть всех',
-                                style: TextStyle(
-                                  color: Color(0xff858ca2),
-                                  fontSize: 16,
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Посмотреть всех',
+                                  style: TextStyle(
+                                    color: Color(0xff858ca2),
+                                    fontSize: 12,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Color(0xff858ca2),
-                                size: 20,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Color(0xff858ca2),
+                                  size: 20,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
