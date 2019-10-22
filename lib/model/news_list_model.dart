@@ -105,3 +105,61 @@ class NewsData {
     return input.substring(0, 1).toUpperCase() + input.substring(1);
   }
 }
+
+class LastNews {
+  LastNews({
+    this.id,
+    this.title,
+    this.shortDescription,
+    this.publishAt,
+    this.newsCategoryName,
+    this.imagePath,
+    this.isActive,
+    this.fullName,
+    this.photoPath,
+    this.employeeId,
+    this.positionName,
+  });
+
+  final String id;
+  final String title;
+  final String shortDescription;
+  final String publishAt;
+  final String newsCategoryName;
+  final String imagePath;
+  final bool isActive;
+  final String fullName;
+  final String photoPath;
+  final String employeeId;
+  final String positionName;
+
+  static List<LastNews> allFromResponse(String response) {
+    var decodedJson = json.decode(response).cast<String, dynamic>();
+
+    return decodedJson['data']['items']
+        .cast<Map<String, dynamic>>()
+        .map((obj) => LastNews.fromMap(obj))
+        .toList()
+        .cast<LastNews>();
+  }
+
+  static LastNews fromMap(Map map) {
+    return new LastNews(
+      id: map['id'],
+      title: map['title'],
+      shortDescription: map['shortDescription'],
+      publishAt: map['publishAt'],
+      newsCategoryName: map['newsCategoryName'],
+      imagePath: map['imagePath'],
+      isActive: map['isActive'],
+      fullName: map['author']['fullName'],
+      photoPath: map['author']['photoPath'],
+      employeeId: map['author']['employeeId'],
+      positionName: map['author']['positionName'],
+    );
+  }
+
+  static String _capitalize(String input) {
+    return input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+}

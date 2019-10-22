@@ -19,7 +19,6 @@ class ActiveEmployeesList extends StatefulWidget {
 class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
   List<ActiveEmployees> _employees = [];
   List<DepartmentsSelectList> _departments = [];
-  // List<DepartmentsSelectList> _departments = List();
 
   bool isLoading;
   bool switchOn = false;

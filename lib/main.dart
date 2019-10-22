@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:SAMR/administration/user_info.dart';
-import 'package:SAMR/dashboard/home.dart';
+import 'package:SAMR/dashboard/desktop/home.dart';
 // import 'package:flutter/rendering.dart';
 
 void main() {

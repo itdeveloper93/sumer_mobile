@@ -10,7 +10,7 @@ import '../administration/user_info.dart';
 import '../common/parse_token.dart';
 import '../model/mini_profile.dart';
 
-import './home.dart';
+import 'package:SAMR/dashboard/desktop/home.dart';
 
 class GlobalDrawer extends StatefulWidget {
   @override
@@ -25,10 +25,6 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
   void initState() {
     super.initState();
     profileFuture = myProfile();
-    // myMethod()
-    //     .then((success) => checkLoginStatus())
-    //     .catchError((e) => print(e))
-    //     .whenComplete(() {});
   }
 
   Future<MiniProfile> myProfile() async {
@@ -161,10 +157,11 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                         ),
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => News(),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => News(),
+                            ),
+                          );
                         },
                       ),
                     ),
