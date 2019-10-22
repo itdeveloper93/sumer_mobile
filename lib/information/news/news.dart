@@ -35,7 +35,10 @@ class _NewsState extends State<News> {
             if (snapshots.hasError) return Text("Error Occurred");
             switch (snapshots.connectionState) {
               case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.blueAccent,
+                ));
               case ConnectionState.none:
                 return Center(child: Text('No data exist!'));
               case ConnectionState.done:
@@ -107,7 +110,7 @@ class _NewsListState extends State<NewsList> {
             margin: EdgeInsets.only(top: 10, right: 10, left: 10),
             elevation: 0.8,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -127,11 +130,10 @@ class _NewsListState extends State<NewsList> {
                       Container(
                         padding: EdgeInsets.only(
                           left: 17,
-                          top: 25,
                           bottom: 5,
                         ),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
+                          width: MediaQuery.of(context).size.width * 0.797,
                           child: Text(
                             news[i].title != null ? news[i].title : '',
                             style: TextStyle(
@@ -212,9 +214,7 @@ class _NewsListState extends State<NewsList> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                      bottom: 10,
-                    ),
+                    transform: Matrix4.translationValues(0, 17, 0),
                     child: ListTile(
                       leading: Container(
                         width: 40,
@@ -228,7 +228,7 @@ class _NewsListState extends State<NewsList> {
                         ),
                       ),
                       title: Container(
-                        transform: Matrix4.translationValues(-5, 0, 0),
+                        transform: Matrix4.translationValues(-5, 4, 0),
                         child: Text(
                           news[i].fullName.isNotEmpty
                               ? news[i].fullName
@@ -240,7 +240,7 @@ class _NewsListState extends State<NewsList> {
                         ),
                       ),
                       subtitle: Container(
-                        transform: Matrix4.translationValues(-5, -5, 0),
+                        transform: Matrix4.translationValues(-5, -1, 0),
                         child: Text(
                           news[i].positionName != null
                               ? news[i].positionName

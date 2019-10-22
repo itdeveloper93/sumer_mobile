@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.arrow_forward,
                                   color: Color(0xff858ca2),
-                                  size: 20,
+                                  size: 15,
                                 ),
                               ],
                             ),
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.arrow_forward,
                                   color: Color(0xff858ca2),
-                                  size: 20,
+                                  size: 15,
                                 ),
                               ],
                             ),

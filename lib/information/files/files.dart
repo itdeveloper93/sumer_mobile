@@ -34,7 +34,10 @@ class _FilesState extends State<Files> {
             if (snapshots.hasError) return Text("Error Occurred");
             switch (snapshots.connectionState) {
               case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.blueAccent,
+                ));
               case ConnectionState.none:
                 return Center(
                     child: Text(
@@ -102,7 +105,10 @@ class _FilesListState extends State<FilesList> {
           margin: EdgeInsets.only(bottom: 15),
           elevation: 0.3,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 20,
+            ),
             child: Column(
               children: <Widget>[
                 Row(
@@ -110,11 +116,10 @@ class _FilesListState extends State<FilesList> {
                     Container(
                       padding: EdgeInsets.only(
                         left: 17,
-                        top: 25,
                         bottom: 5,
                       ),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: MediaQuery.of(context).size.width * 0.797,
                         child: Text(
                           files[i].title != null ? files[i].title : '',
                           style: TextStyle(
@@ -193,9 +198,7 @@ class _FilesListState extends State<FilesList> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                    bottom: 10,
-                  ),
+                  transform: Matrix4.translationValues(0, 17, 0),
                   child: ListTile(
                     leading: Container(
                       width: 40,
@@ -209,7 +212,7 @@ class _FilesListState extends State<FilesList> {
                       ),
                     ),
                     title: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
+                      transform: Matrix4.translationValues(-5, 4, 0),
                       child: Text(
                         files[i].fullName.isNotEmpty
                             ? files[i].fullName
@@ -221,7 +224,7 @@ class _FilesListState extends State<FilesList> {
                       ),
                     ),
                     subtitle: Container(
-                      transform: Matrix4.translationValues(-5, -5, 0),
+                      transform: Matrix4.translationValues(-5, -1, 0),
                       child: Text(
                         files[i].positionName != null
                             ? files[i].positionName
