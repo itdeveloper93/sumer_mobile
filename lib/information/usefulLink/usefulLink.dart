@@ -34,7 +34,10 @@ class _UsefulLinkState extends State<UsefulLink> {
             if (snapshots.hasError) return Text("Error Occurred");
             switch (snapshots.connectionState) {
               case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.blueAccent,
+                ));
               case ConnectionState.none:
                 return Center(child: Text('No data exist!'));
               case ConnectionState.done:
@@ -98,9 +101,10 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
           margin: EdgeInsets.only(top: 10, right: 10, left: 10),
           elevation: 0.3,
           child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 20,
             ),
             child: Column(
               children: <Widget>[
@@ -109,11 +113,10 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                     Container(
                       padding: EdgeInsets.only(
                         left: 17,
-                        top: 25,
                         bottom: 5,
                       ),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.75,
+                        width: MediaQuery.of(context).size.width * 0.797,
                         child: Text(
                           usefulLinks[i].title != null
                               ? usefulLinks[i].title
@@ -185,7 +188,6 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                   padding: EdgeInsets.symmetric(
                     horizontal: 16,
                   ),
-                  margin: EdgeInsets.only(bottom: 10),
                   child: Text(
                     usefulLinks[i].description.isNotEmpty
                         ? usefulLinks[i].description
@@ -198,9 +200,6 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                    bottom: 10,
-                  ),
                   child: ListTile(
                     leading: Container(
                       width: 40,
@@ -214,7 +213,7 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                       ),
                     ),
                     title: Container(
-                      transform: Matrix4.translationValues(-5, 0, 0),
+                      transform: Matrix4.translationValues(-5, 4, 0),
                       child: Text(
                         usefulLinks[i].fullName.isNotEmpty
                             ? usefulLinks[i].fullName
@@ -226,7 +225,7 @@ class _UsefulLinksListState extends State<UsefulLinksList> {
                       ),
                     ),
                     subtitle: Container(
-                      transform: Matrix4.translationValues(-5, -5, 0),
+                      transform: Matrix4.translationValues(-5, -1, 0),
                       child: Text(
                         usefulLinks[i].positionName != null
                             ? usefulLinks[i].positionName
