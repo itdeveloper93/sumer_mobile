@@ -54,39 +54,57 @@ class _LastNewsListTitleState extends State<LastNewsListTitle>
                 vertical: 10,
               ),
               child: ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            NewsDetail(_lastNewsData[index].id.toString()),
-                      ),
-                    );
-                  },
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    child: ClipOval(
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: 'assets/image-placeholder.png',
-                        image: _lastNewsData[index].photoPath,
-                      ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          NewsDetail(_lastNewsData[index].id.toString()),
+                    ),
+                  );
+                },
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  child: ClipOval(
+                    child: FadeInImage.assetNetwork(
+                      fit: BoxFit.cover,
+                      placeholder: 'assets/image-placeholder.png',
+                      image: _lastNewsData[index].photoPath,
                     ),
                   ),
-                  title: Text(_lastNewsData[index].title),
-                  subtitle: Container(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.folder,
-                          size: 16,
+                ),
+                title: Text(_lastNewsData[index].title),
+                subtitle: Container(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.folder,
+                        size: 16,
+                        color: Color(0xff9da1ac),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        _lastNewsData[index].newsCategoryName,
+                        style: TextStyle(
                           color: Color(0xff9da1ac),
+                          fontSize: 13,
                         ),
-                        SizedBox(
-                          width: 5,
+                      ),
+                    ],
+                  ),
+                ),
+                trailing: Container(
+                  transform: Matrix4.translationValues(0, 9, 0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(Icons.date_range, size: 16),
                         ),
-                        Text(
-                          _lastNewsData[index].newsCategoryName,
+                        TextSpan(
+                          text: _lastNewsData[index].publishAt,
                           style: TextStyle(
                             color: Color(0xff9da1ac),
                             fontSize: 13,
@@ -95,25 +113,8 @@ class _LastNewsListTitleState extends State<LastNewsListTitle>
                       ],
                     ),
                   ),
-                  trailing: Container(
-                    transform: Matrix4.translationValues(0, 9, 0),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(Icons.date_range, size: 16),
-                          ),
-                          TextSpan(
-                            text: _lastNewsData[index].publishAt,
-                            style: TextStyle(
-                              color: Color(0xff9da1ac),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )),
+                ),
+              ),
             ),
           );
         });

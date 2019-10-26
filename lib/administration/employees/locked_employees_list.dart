@@ -18,7 +18,6 @@ class LockedEmployeesList extends StatefulWidget {
 class _LockedEmployeesListState extends State<LockedEmployeesList> {
   List<LockedEmployees> _employees = [];
   List<DepartmentsSelectList> _departments = [];
-  // List<DepartmentsSelectList> _departments = List();
 
   bool isLoading;
   bool switchOn = false;
@@ -67,23 +66,24 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
 
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return AnimatedPadding(
-            padding: MediaQuery.of(context).viewInsets,
-            duration: const Duration(milliseconds: 100),
-            curve: Curves.decelerate,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 25),
-              child: Wrap(
-                children: <Widget>[
-                  textSection(),
-                  buttonSection(),
-                ],
-              ),
+      context: context,
+      builder: (BuildContext bc) {
+        return AnimatedPadding(
+          padding: MediaQuery.of(context).viewInsets,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.decelerate,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 25),
+            child: Wrap(
+              children: <Widget>[
+                textSection(),
+                buttonSection(),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Row buttonSection() {
@@ -161,8 +161,10 @@ class _LockedEmployeesListState extends State<LockedEmployeesList> {
         builder: (FormFieldState<String> state) {
           return InputDecorator(
             decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0))),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 hint: Text("Отдел"),

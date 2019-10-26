@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:SAMR/information/files/files.dart';
 import 'package:SAMR/information/usefulLink/usefulLink.dart';
+import 'package:SAMR/messages/compose.dart';
+import 'package:SAMR/messages/inbox.dart';
+import 'package:SAMR/messages/sent.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/active_employees_list.dart';
 import 'package:SAMR/administration/employees/locked_employees_list.dart';
@@ -100,22 +103,6 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.archive,
-                    color: Color(0xFFd2d7e8),
-                  ),
-                  title: Text(
-                    'Сообщения',
-                    style: TextStyle(
-                      color: Color(0xFFd2d7e8),
-                    ),
-                  ),
-                  trailing: Text(
-                    '15',
-                    style: TextStyle(color: Color(0xFFd2d7e8)),
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(
                     Icons.desktop_windows,
                     color: Color(0xFFd2d7e8),
                   ),
@@ -132,6 +119,78 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                           builder: (context) => HomePage(),
                         ));
                   },
+                ),
+                ExpansionTile(
+                  leading: Icon(
+                    Icons.archive,
+                    color: Color(0xFFd2d7e8),
+                  ),
+                  title: Text(
+                    'Сообщения',
+                    style: TextStyle(
+                      color: Color(0xFFd2d7e8),
+                    ),
+                  ),
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Написать',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Compose(),
+                              ));
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Входящие',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Inbox(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 56),
+                      child: ListTile(
+                        title: Text(
+                          'Отправленные',
+                          style: TextStyle(
+                            color: Color(0xFF767d92),
+                            fontSize: 13,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Sent(),
+                              ));
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 ExpansionTile(
                   leading: Icon(

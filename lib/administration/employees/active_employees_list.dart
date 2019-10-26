@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:SAMR/common/labeled_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/employee.dart';
 import 'package:SAMR/dashboard/global_appBar.dart';
@@ -45,7 +44,7 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
     isLoading = false;
     http.Response response = await http.get(
       url +
-          'api/Employees?fullName=${fullNameController.text}&departmentId=${currentSelectedValue}&onlyUsers=${switchOn}',
+          'api/Employees?fullName=${fullNameController.text}&departmentId=${currentSelectedValue.toString()}&onlyUsers=${switchOn.toString()}',
       // Send authorization headers to the backend.
       headers: await AuthService.addAuthTokenToRequest(),
     );
@@ -209,20 +208,20 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
             ),
           ),
           _buildDepartmentDropdown(),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: LabeledSwitch(
-              label: 'Только пользователи',
-              labelSize: 15,
-              activeColor: Colors.blueAccent,
-              value: switchOn,
-              onChanged: (bool newValue) {
-                setState(() {
-                  switchOn = newValue;
-                });
-              },
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.only(bottom: 10),
+          //   child: LabeledSwitch(
+          //     label: 'Только пользователи',
+          //     labelSize: 15,
+          //     activeColor: Colors.blueAccent,
+          //     value: switchOn,
+          //     onChanged: (bool newValue) {
+          //       setState(() {
+          //         switchOn = newValue;
+          //       });
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
@@ -231,50 +230,50 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
   Widget _buildEmployeesListTile(BuildContext context, int index) {
     var employee = _employees[index];
 
-    return Card(
-      margin: EdgeInsets.only(top: 10, right: 10, left: 10),
-      elevation: 0.8,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 10,
-        ),
-        child: ListTile(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) => Employee(employee.id),
-              ),
-            );
-          },
-          leading: Hero(
-            tag: index,
-            child: Container(
-              width: 60,
-              height: 60,
-              child: ClipOval(
-                child: FadeInImage.assetNetwork(
-                  fit: BoxFit.cover,
-                  placeholder: 'assets/noavatar.jpg',
-                  image: employee.photoPathSmall.toString(),
+    return Container(
+      padding: EdgeInsets.only(),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => Employee(employee.id),
+                ),
+              );
+            },
+            trailing: Icon(Icons.navigate_next),
+            leading: Hero(
+              tag: index,
+              child: Container(
+                width: 60,
+                height: 60,
+                child: ClipOval(
+                  child: FadeInImage.assetNetwork(
+                    fit: BoxFit.cover,
+                    placeholder: 'assets/noavatar.jpg',
+                    image: employee.photoPathSmall.toString(),
+                  ),
                 ),
               ),
             ),
+            title: Text(employee.fullName),
+            subtitle: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(bottom: 3),
+                  child: Text(employee.department + ' › ' + employee.position),
+                ),
+                Container(
+                  child: Text(employee.phone),
+                )
+              ],
+            ),
           ),
-          title: Text(employee.fullName),
-          subtitle: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(bottom: 3),
-                child: Text(employee.department + ' › ' + employee.position),
-              ),
-              Container(
-                child: Text(employee.phone),
-              )
-            ],
-          ),
-        ),
+          Divider(),
+        ],
       ),
     );
   }
@@ -301,7 +300,7 @@ class _ActiveEmployeesListState extends State<ActiveEmployeesList> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xfff4f7f8),
+      backgroundColor: Colors.white,
       drawer: GlobalDrawer(),
       appBar: GlobalAppBar(
         title: Container(

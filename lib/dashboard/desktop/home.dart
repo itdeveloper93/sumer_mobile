@@ -1,6 +1,5 @@
 import 'package:SAMR/administration/employees/active_employees_list.dart';
 import 'package:SAMR/dashboard/desktop/last_news.dart';
-import 'package:SAMR/information/news/news.dart';
 import 'package:SAMR/requests/employees_request.dart';
 import 'package:SAMR/requests/news_request.dart';
 import 'package:flutter/material.dart';
@@ -153,6 +152,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                width: 10,
               ),
               GestureDetector(
                 onTap: () {
