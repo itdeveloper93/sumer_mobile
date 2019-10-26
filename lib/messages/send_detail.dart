@@ -8,17 +8,17 @@ import 'package:SAMR/dashboard/global_appBar.dart';
 import 'package:SAMR/dashboard/global_drawer.dart';
 import 'package:SAMR/global.dart';
 
-class SentMessageDetail extends StatefulWidget {
+class SendMessageDetail extends StatefulWidget {
   final String id;
-  SentMessageDetail(this.id);
+  SendMessageDetail(this.id);
   @override
-  _SentMessageDetailState createState() => _SentMessageDetailState(id);
+  _SendMessageDetailState createState() => _SendMessageDetailState(id);
 }
 
-class _SentMessageDetailState extends State<SentMessageDetail>
+class _SendMessageDetailState extends State<SendMessageDetail>
     with SingleTickerProviderStateMixin {
   String id;
-  _SentMessageDetailState(this.id);
+  _SendMessageDetailState(this.id);
   bool isLoading = false;
 
   String photoPath;
@@ -27,7 +27,7 @@ class _SentMessageDetailState extends State<SentMessageDetail>
   String createdAt;
   String fullName;
   String position;
-  Future<String> _loadSentMessage(String id) async {
+  Future<String> _loadSendMessage(String id) async {
     final response = await http.get(
       url + "api/Messages/Sent/" + id,
       // Send authorization headers to the backend.
@@ -47,7 +47,7 @@ class _SentMessageDetailState extends State<SentMessageDetail>
 
   @override
   void initState() {
-    _loadSentMessage(id);
+    _loadSendMessage(id);
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _SentMessageDetailState extends State<SentMessageDetail>
         title: Container(
           transform: Matrix4.translationValues(-20, 1, 0),
           child: Text(
-            'Sent Detail',
+            'Send Detail',
             style: TextStyle(
                 color: Color(0xFF293148),
                 fontFamily: "Roboto",

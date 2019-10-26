@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:SAMR/messages/sent.dart';
+import 'package:SAMR/messages/send.dart';
 import 'package:SAMR/model/users.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ class Compose extends StatefulWidget {
 class _ComposeState extends State<Compose> {
   bool isLoading = false;
   final _key = new GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   List<User> _users = [];
 
@@ -57,7 +58,7 @@ class _ComposeState extends State<Compose> {
           isLoading = false;
         });
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Sent()),
+            MaterialPageRoute(builder: (BuildContext context) => Send()),
             (Route<dynamic> route) => false);
       }
     } else {
@@ -122,16 +123,31 @@ class _ComposeState extends State<Compose> {
           width: MediaQuery.of(context).size.width * 0.439,
           child: RaisedButton(
             onPressed: () {
-              setState(() {
-                isLoading = true;
-              });
-              submit(titleController.text, currentSelectedValue,
-                  bodyController.text);
-              Navigator.pop(context);
+              if (_formKey.currentState.validate()) {
+                setState(() {
+                  isLoading = true;
+                });
+                submit(titleController.text, currentSelectedValue,
+                    bodyController.text);
+                Navigator.pop(context);
+              }
             },
             elevation: 0.0,
             color: Colors.indigoAccent[700],
-            child: Text("Сохранить", style: TextStyle(color: Colors.white)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.send,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text("Написать", style: TextStyle(color: Colors.white)),
+              ],
+            ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
           ),
@@ -160,6 +176,26 @@ class _ComposeState extends State<Compose> {
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String value) {
+    final snackBar = new SnackBar(
+      content: new Text(value),
+      duration: new Duration(seconds: 3),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  _validateFields(var value) {
+    if (titleController.toString().isNotEmpty) {
+      switch (value) {
+        case '':
+          return _showSnackBar('Заголовок и получатель обязательно');
+          break;
+      }
+    }
+  }
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController receiverUserIdController =
       TextEditingController();
@@ -177,6 +213,9 @@ class _ComposeState extends State<Compose> {
                 border: OutlineInputBorder(),
                 labelText: 'Заголовок',
               ),
+              validator: (value) {
+                return null;
+              },
             ),
           ),
           _buildUsersDropdown(),
@@ -193,6 +232,10 @@ class _ComposeState extends State<Compose> {
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
               ),
+              validator: (value) {
+                _validateFields(value);
+                return null;
+              },
             ),
           ),
         ],
@@ -223,7 +266,7 @@ class _ComposeState extends State<Compose> {
           FocusScope.of(context).unfocus();
         },
         child: Form(
-          key: _key,
+          key: _formKey,
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: 15,

@@ -19,7 +19,7 @@ class MessagesRequest implements MessagesRepository {
     }
   }
 
-  Future<SentPages> loadSent(
+  Future<SendPages> loadSend(
       int currentPage, String title, String fromDate, String toDate) async {
     http.Response response = await http.get(
       url + 'api/Messages/Sent?page=${currentPage.toString()}&pageSize=10&',
@@ -27,7 +27,7 @@ class MessagesRequest implements MessagesRepository {
       headers: await AuthService.addAuthTokenToRequest(),
     );
     if (response.statusCode == 200) {
-      return SentPages.fromJson(json.decode(response.body));
+      return SendPages.fromJson(json.decode(response.body));
     } else {
       throw Exception('Faild to load');
     }
@@ -37,6 +37,6 @@ class MessagesRequest implements MessagesRepository {
 abstract class MessagesRepository {
   Future<InboxPages> loadInbox(
       int pageNumber, String title, String fromDate, String toDate);
-  Future<SentPages> loadSent(
+  Future<SendPages> loadSend(
       int pageNumber, String title, String fromDate, String toDate);
 }

@@ -105,14 +105,14 @@ class InboxModel {
   }
 }
 
-class SentPages {
-  List<SentModel> results;
+class SendPages {
+  List<SendModel> results;
   int page;
   int totalPages;
   int totalCount;
   int pageSize;
 
-  SentPages({
+  SendPages({
     this.results,
     this.page,
     this.totalPages,
@@ -120,14 +120,14 @@ class SentPages {
     this.totalCount,
   });
 
-  factory SentPages.fromRawJson(String str) =>
-      SentPages.fromJson(json.decode(str));
+  factory SendPages.fromRawJson(String str) =>
+      SendPages.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory SentPages.fromJson(Map<String, dynamic> json) => new SentPages(
-        results: List<SentModel>.from(
-            json['data']['items'].map((x) => SentModel.fromMap(x))),
+  factory SendPages.fromJson(Map<String, dynamic> json) => new SendPages(
+        results: List<SendModel>.from(
+            json['data']['items'].map((x) => SendModel.fromMap(x))),
         page: json['data']["page"],
         totalPages: json['data']["totalPages"],
       );
@@ -139,8 +139,8 @@ class SentPages {
       };
 }
 
-class SentModel {
-  SentModel({
+class SendModel {
+  SendModel({
     this.id,
     this.title,
     this.body,
@@ -166,18 +166,18 @@ class SentModel {
   final String employeeId;
   final String positionName;
 
-  static List<SentModel> allFromResponse(String response) {
+  static List<SendModel> allFromResponse(String response) {
     var decodedJson = json.decode(response).cast<String, dynamic>();
 
     return decodedJson['data']['items']
         .cast<Map<String, dynamic>>()
-        .map((obj) => SentModel.fromMap(obj))
+        .map((obj) => SendModel.fromMap(obj))
         .toList()
-        .cast<SentModel>();
+        .cast<SendModel>();
   }
 
-  static SentModel fromMap(Map map) {
-    return new SentModel(
+  static SendModel fromMap(Map map) {
+    return new SendModel(
       id: map['id'],
       title: map['title'],
       body: map['body'],

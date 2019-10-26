@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  autocomplete_textfield:
-    dependency: "direct main"
-    description:
-      name: autocomplete_textfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.3"
   basic_utils:
     dependency: "direct main"
     description:
@@ -113,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.3"
-  find_dropdown:
-    dependency: "direct main"
-    description:
-      name: find_dropdown
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.7+1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -132,13 +118,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.0"
-  flutter_keyboard_visibility:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -151,13 +130,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_typeahead:
-    dependency: "direct main"
-    description:
-      name: flutter_typeahead
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.0"
   html:
     dependency: transitive
     description:
@@ -256,20 +228,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.22.4"
-  select_dialog:
-    dependency: transitive
-    description:
-      name: select_dialog
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6+1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -277,13 +235,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.3+4"
-  simple_autocomplete_formfield:
-    dependency: "direct main"
-    description:
-      name: simple_autocomplete_formfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.4"
   sky_engine:
     dependency: transitive
     description: flutter

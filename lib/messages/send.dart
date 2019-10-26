@@ -1,16 +1,16 @@
 import 'package:SAMR/dashboard/global_appBar.dart';
 import 'package:SAMR/dashboard/global_drawer.dart';
-import 'package:SAMR/messages/sent_detail.dart';
+import 'package:SAMR/messages/send_detail.dart';
 import 'package:SAMR/model/messages_model.dart';
 import 'package:SAMR/requests/message_request.dart';
 import 'package:flutter/material.dart';
 
-class Sent extends StatefulWidget {
+class Send extends StatefulWidget {
   @override
-  _SentState createState() => _SentState();
+  _SendState createState() => _SendState();
 }
 
-class _SentState extends State<Sent> {
+class _SendState extends State<Send> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _SentState extends State<Sent> {
         ),
       ),
       body: FutureBuilder(
-        future: MessagesRequest().loadSent(1, null, null, null),
+        future: MessagesRequest().loadSend(1, null, null, null),
         builder: (BuildContext c, AsyncSnapshot snapshots) {
           if (snapshots.hasError) return Text("Error Occurred");
           switch (snapshots.connectionState) {
@@ -42,8 +42,8 @@ class _SentState extends State<Sent> {
             case ConnectionState.none:
               return Center(child: Text('No data exist!'));
             case ConnectionState.done:
-              return SentList(
-                sentData: snapshots.data,
+              return SendList(
+                sendData: snapshots.data,
               );
             default:
               return Container();
@@ -64,37 +64,37 @@ class _SentState extends State<Sent> {
   }
 }
 
-class SentList extends StatefulWidget {
-  final SentPages sentData;
-  const SentList({
-    this.sentData,
+class SendList extends StatefulWidget {
+  final SendPages sendData;
+  const SendList({
+    this.sendData,
     Key key,
   }) : super(key: key);
 
   @override
-  _SentListState createState() => _SentListState();
+  _SendListState createState() => _SendListState();
 }
 
-class _SentListState extends State<SentList> {
+class _SendListState extends State<SendList> {
   ScrollController scrollController = new ScrollController();
-  List<SentModel> sent;
+  List<SendModel> send;
   int currentPage = 1;
 
   request() {
     MessagesRequest()
-        .loadSent(currentPage + 1, nameController.text, fromDateController.text,
+        .loadSend(currentPage + 1, nameController.text, fromDateController.text,
             toDateController.text)
         .then((val) {
       currentPage = val.page;
       setState(() {
-        sent.addAll(val.results);
+        send.addAll(val.results);
       });
     });
   }
 
   @override
   void initState() {
-    sent = widget.sentData.results;
+    send = widget.sendData.results;
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -185,7 +185,7 @@ class _SentListState extends State<SentList> {
             onPressed: () {
               // Navigator.pop(context);
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => Sent()));
+                  context, MaterialPageRoute(builder: (_) => Send()));
             },
             elevation: 0.0,
             color: Color(0xFFecf0f5),
@@ -205,7 +205,7 @@ class _SentListState extends State<SentList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: sent.length,
+      itemCount: send.length,
       controller: scrollController,
       itemBuilder: (BuildContext c, int i) {
         return Card(
@@ -218,7 +218,7 @@ class _SentListState extends State<SentList> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            SentMessageDetail(sent[i].id.toString()),
+                            SendMessageDetail(send[i].id.toString()),
                       ),
                     );
                   },
@@ -230,13 +230,13 @@ class _SentListState extends State<SentList> {
                       child: FadeInImage.assetNetwork(
                         fit: BoxFit.cover,
                         placeholder: 'assets/noavatar.jpg',
-                        image: sent[i].photoPath,
+                        image: send[i].photoPath,
                       ),
                     ),
                   ),
-                  title: Text(sent[i].title),
+                  title: Text(send[i].title),
                   subtitle: Text(
-                    sent[i].createdAt,
+                    send[i].createdAt,
                     style: TextStyle(
                       color: Color(0xff9da1ac),
                       fontSize: 13,

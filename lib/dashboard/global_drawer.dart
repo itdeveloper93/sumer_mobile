@@ -3,7 +3,7 @@ import 'package:SAMR/information/files/files.dart';
 import 'package:SAMR/information/usefulLink/usefulLink.dart';
 import 'package:SAMR/messages/compose.dart';
 import 'package:SAMR/messages/inbox.dart';
-import 'package:SAMR/messages/sent.dart';
+import 'package:SAMR/messages/send.dart';
 import 'package:flutter/material.dart';
 import 'package:SAMR/administration/employees/active_employees_list.dart';
 import 'package:SAMR/administration/employees/locked_employees_list.dart';
@@ -185,7 +185,7 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Sent(),
+                                builder: (context) => Send(),
                               ));
                         },
                       ),
